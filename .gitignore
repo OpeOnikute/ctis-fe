@@ -1,0 +1,10 @@
+l.bowerrc
+ .gitignore
+ .jshintrc
+ .travis.ymlogs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
+.idea/

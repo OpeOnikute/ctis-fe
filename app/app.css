@@ -1,0 +1,66 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+body {
+  font-size: 16px;
+}
+
+.home {
+  background-color: rgba(157, 157, 157, 0.5);
+  color: #fff;
+}
+.cu-cl {
+  color: darkmagenta;
+}
+.btn-cl {
+  background-color: darkmagenta;
+}
+.mg-xs {
+  margin: 15px;
+}
+.mg-md {
+  margin: 30px;
+}
+.map {
+  height: 500px;
+  border: 1px solid rgba(0,0,0, 0.6);
+  margin: 15px 0;
+  border-radius: 5px;
+}
+
+.block-ui-message {
+  display: inline-block;
+  text-align: left;
+  background-color: rgba(0,0,0,0.7);
+  color: #f5f5f5;
+  padding: 15px;
+  border-radius: 4px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  /* needed for IE */
+
+  filter: alpha(opacity=100);
+}
