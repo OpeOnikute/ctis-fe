@@ -29,14 +29,20 @@ body {
 }
 
 .home {
-  background-color: rgba(157, 157, 157, 0.5);
-  color: #fff;
+  color: #333;
 }
 .cu-cl {
   color: darkmagenta;
 }
 .btn-cl {
   background-color: darkmagenta;
+  border-color: darkmagenta;
+}
+.nav-logo {
+  color: darkmagenta !important;
+  margin: 0;
+  font-size: 40px;
+  font-weight: 800;
 }
 .mg-xs {
   margin: 15px;
@@ -51,6 +57,31 @@ body {
   border-radius: 5px;
 }
 
+/*.map-container .container-fluid {*/
+  /*position: absolute;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+/*}*/
+.map-info {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.map-info i {
+  background-color: black;
+  padding: 10px;
+  color: white;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.map-info small {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #6f6f6f;
+  font-size: 75%;
+}
+
 .block-ui-message {
   display: inline-block;
   text-align: left;
@@ -63,4 +94,20 @@ body {
   /* needed for IE */
 
   filter: alpha(opacity=100);
+}
+.help-block p {
+  margin: 0;
+  text-align: left;
+  color: red;
+  font-size: 12px;
+}
+.has-error {
+  border: 1px solid red;
+}
+.footer {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+    position:relative;
 }

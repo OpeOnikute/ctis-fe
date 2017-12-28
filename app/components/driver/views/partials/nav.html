@@ -1,0 +1,127 @@
+<!-- start: MAIN NAVIGATION MENU -->
+<div class="navbar-title">
+	<span translate="sidebar.heading.NAVIGATION">Main Navigation</span>
+</div>
+<ul class="main-navigation-menu">
+	<!--<li ui-sref-active="active">-->
+		<!--<a ui-sref="app.dashboard">-->
+			<!--<div class="item-content">-->
+				<!--<div class="item-media">-->
+					<!--<i class="ti-home"></i>-->
+				<!--</div>-->
+				<!--<div class="item-inner">-->
+					<!--<span class="title" translate="sidebar.nav.dashboard.MAIN"> Dashboard </span>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</a>-->
+	<!--</li>-->
+	<li ng-class="{'active open':$state.includes('driver.dashboard.shuttles')}">
+		<a href="javascript:void(0)">
+			<div class="item-content">
+				<div class="item-media">
+					<i class="fa fa-bus"></i>
+				</div>
+				<div class="item-inner">
+					<span class="title"> Shuttles </span><i class="icon-arrow"></i>
+				</div>
+			</div>
+		</a>
+		<ul class="sub-menu">
+			<li ui-sref-active="active">
+				<a ui-sref="driver.dashboard.shuttles.manage">
+					<span class="title"> Manage Shuttles</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="driver.dashboard.shuttles.add">
+					<span class="title"> Add New Shuttle</span>
+				</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="javascript:void(0)">
+			<div class="item-content">
+				<div class="item-media">
+					<i class="fa fa-gears"></i>
+				</div>
+				<div class="item-inner">
+					<span class="title"> Settings </span><i class="icon-arrow"></i>
+				</div>
+			</div>
+		</a>
+		<ul class="sub-menu">
+			<li>
+				<a href="javascript:;">
+					Account Types <i class="icon-arrow"></i>
+				</a>
+				<ul class="sub-menu">
+					<li ui-sref-active="active">
+						<a ui-sref="app.settings.createAccountType">
+							<span class="title"> Create</span>
+						</a>
+					</li>
+					<li ui-sref-active="active">
+						<a ui-sref="app.settings.manageAccountTypes">
+							<span class="title"> Manage</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:;">
+					Admins <i class="icon-arrow"></i>
+				</a>
+				<ul class="sub-menu">
+					<li ui-sref-active="active">
+						<a ui-sref="app.settings.createAdmin">
+							<span class="title"> Create</span>
+						</a>
+					</li>
+					<li ui-sref-active="active">
+						<a ui-sref="app.settings.manageAdmins">
+							<span class="title"> Manage</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a ui-sref="app.settings.emailLog" ng-show="user.adminRole === 3">
+					Automatic Email Log <i class="icon-arrow"></i>
+				</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+<!-- end: MAIN NAVIGATION MENU -->
+<!-- start: CORE FEATURES -->
+<!--<div class="navbar-title">-->
+	<!--<span translate="sidebar.heading.FEATURES">Core Features</span>-->
+<!--</div>-->
+<!--<ul class="folders">-->
+	<!--<li>-->
+		<!--<a ui-sref="app.pages.calendar">-->
+			<!--<div class="item-content">-->
+				<!--<div class="item-media">-->
+					<!--<span class="fa-stack"> <i class="fa fa-square fa-stack-2x"></i> <i class="fa fa-terminal fa-stack-1x fa-inverse"></i> </span>-->
+				<!--</div>-->
+				<!--<div class="item-inner">-->
+					<!--<span class="title" translate="sidebar.nav.pages.CALENDAR"> Calendar </span>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</a>-->
+	<!--</li>-->
+	<!--<li>-->
+		<!--<a ui-sref="app.pages.messages">-->
+			<!--<div class="item-content">-->
+				<!--<div class="item-media">-->
+					<!--<span class="fa-stack"> <i class="fa fa-square fa-stack-2x"></i> <i class="fa fa-folder-open-o fa-stack-1x fa-inverse"></i> </span>-->
+				<!--</div>-->
+				<!--<div class="item-inner">-->
+					<!--<span class="title" translate="sidebar.nav.pages.MESSAGES"> Messages </span>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</a>-->
+	<!--</li>-->
+<!--</ul>-->
+<!-- end: CORE FEATURES -->

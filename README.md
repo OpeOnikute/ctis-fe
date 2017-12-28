@@ -1,3 +1,15 @@
+# CTIS
+Benefits:
+- Plan your trips
+Getting from A to B effectively in campus is hard. CTIS technology helps you plan your trips around campus more effectively.
+- Get real-time information about shuttles
+Arrival times, Number available, Driver information etc are useful information that would help you optimize your journeys.
+- Get information about select locations on campus.
+Tourist? Get information about some of our buildings and learn about our heritage!
+- Get useful information about your trip.
+Estimate how long it will take for you to get from Chapel to EIE e.g. By pedestrian walk, car or bike.
+
+
 # `angular-seed` — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS][angularjs] web app. You can use it
