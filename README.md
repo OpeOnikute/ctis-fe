@@ -1,13 +1,25 @@
 # CTIS
 Benefits:
-- Plan your trips
+- Plan your trips (map)
 Getting from A to B effectively in campus is hard. CTIS technology helps you plan your trips around campus more effectively.
-- Get real-time information about shuttles
+- Get real-time information about shuttles (bus)
 Arrival times, Number available, Driver information etc are useful information that would help you optimize your journeys.
-- Get information about select locations on campus.
+- Get information about select locations on campus. (building)
 Tourist? Get information about some of our buildings and learn about our heritage!
-- Get useful information about your trip.
+- Get useful information about your trip. (info)
 Estimate how long it will take for you to get from Chapel to EIE e.g. By pedestrian walk, car or bike.
+
+FAQ:
+- What does ctis mean?
+CTIS stands for CU (Covenant University) Traveller Information System
+- What is an Advanced Traveller Information System?
+An ATIS is a system which helps users plan their trips around a region effectively. Popular examples are what you see at bus terminals and more recently, apps like Waze.
+- How is it of benefit to me?
+An ATIS saves you the time and cost of not knowing how to plan your journeys. It helps increase your mobility and improves safety.
+- How can I use it?
+Simply go to the map, to get useful information.
+- Do I need to pay for the service?
+No, it's entirely free.
 
 
 # `angular-seed` — the seed for AngularJS apps

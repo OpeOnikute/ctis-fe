@@ -51,6 +51,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
         templateUrl: 'views/map.html',
         resolve: loadSequence('mapCtrl'),
         title: 'Map'
+    }).state('faq', {
+        url: "/faq",
+        templateUrl: 'views/faq.html',
+        title: 'FAQ'
     }).state('driver', {
         url: "/driver",
         templateUrl: 'components/driver/views/index.html',

@@ -1,63 +1,60 @@
 <div class="container-fluid home" ng-controller="homeCtrl">
-  <div class="row" style="background: url(../img/bg1.jpg); background-size: cover; min-height: 400px;">
+  <div class="row" style="background: url(../img/bg1.jpg); background-size: cover; min-height: 400px; color: white;">
+    <div class="index-top">
+      <h1 class="large-heading">Covenant University Traveller Information System</h1>
+      <h4>Ever hoped you could move around campus faster and cheaper? We've got you covered.</h4>
+    </div>
   </div>
-  <div class="container-fluid text-center" style="padding: 50px;">
-
-    <!--<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">-->
-
-      <!--<ol class="carousel-indicators">-->
-        <!--<li data-target="#carouselExampleSlidesOnly" data-slide-to="0" class="active"></li>-->
-        <!--<li data-target="#carouselExampleSlidesOnly" data-slide-to="1"></li>-->
-      <!--</ol>-->
-
-      <!--<div class="carousel-inner" role="listbox">-->
-        <!--<div class="carousel-item active">-->
-          <!--<img class="d-block img-fluid" style="max-height: 250px;" src="../img/bg1.jpg">-->
-          <!--<div class="carousel-caption d-none d-md-block">-->
-            <!--<p>hi</p>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="carousel-item">-->
-          <!--<img class="d-block img-fluid" style="max-height: 250px;" src="../img/bg1.jpg">-->
-          <!--<div class="carousel-caption d-none d-md-block">-->
-            <!--<p>bye</p>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
+  <div class="container-fluid text-center">
     <div class="row">
-      <div class="col-md-4 col-md-offset-2">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <p>Take charge of your movement in Hebron.</p>
+      <div class="padding-40">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2">
+            <div class="padding-20">
+              <p class="cu-icon"><i class="fa fa-map"></i></p>
+              <p class="cu-txt-header">Plan your trips.</p>
+              <p>Getting from A to B effectively in campus is hard. CTIS technology helps you plan your trips around campus more effectively.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="padding-20">
+              <p class="cu-icon"><i class="fa fa-bus"></i></p>
+              <p class="cu-txt-header">Get real-time information about shuttles.</p>
+              <p>Arrival times, Number available, Driver information etc are useful information that would help you optimize your journeys.</p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <p><i class="fa fa-bus"></i></p>
-            <p>Take charge of your movement in Hebron.</p>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2">
+            <div class="padding-20">
+              <p class="cu-icon"><i class="fa fa-building"></i></p>
+              <p class="cu-txt-header">Get information about select locations <br>on campus.</p>
+              <p>Tourist? Get information about some of our buildings and learn about our heritage!</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="padding-20">
+              <p class="cu-icon"><i class="fa fa-info-circle"></i></p>
+              <p class="cu-txt-header">Get useful information about your planned trip around campus.</p>
+              <p>Estimate how long it will take for you to get from Chapel to EIE e.g. By pedestrian walk, car or bike.</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="padding-20">
+            <a class="btn btn-cl" ui-sref="map">Get Started</a>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <p>Take charge of your movement in Hebron.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mg-md">
-      <a class="btn btn-primary btn-cl" ui-sref="map">Get Started</a>
-    </div>
+</div>
+<div class="row">
+  <div class="text-center padding-40 map-bg">
+    <h2>Driver?</h2>
+    <p>Create an account to add your shuttle!</p>
+    <a class="btn btn-cl" ui-sref="driver.signup">Sign Up</a>
+    <p style="margin-top: 10px;"><small>Already have an account? <a class="cu-cl" ui-sref="driver.login">Login</a></small></p>
+  </div>
 </div>
 </div>
 

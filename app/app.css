@@ -26,6 +26,7 @@
 
 body {
   font-size: 16px;
+  letter-spacing: 1px;
 }
 
 .home {
@@ -37,6 +38,18 @@ body {
 .btn-cl {
   background-color: darkmagenta;
   border-color: darkmagenta;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.btn-cl:hover {
+  background-color: #cb00cb;
+  color: white;
+}
+
+.btn-cl:visited {
+  color: white;
 }
 .nav-logo {
   color: darkmagenta !important;
@@ -110,4 +123,103 @@ body {
     background-color: #f8f8f8;
     border-top: 1px solid #e7e7e7;
     position:relative;
+}
+
+/*CSS PADDING*/
+.padding-5 {
+  padding: 5px !important;
+}
+
+.padding-10 {
+  padding: 10px !important;
+}
+
+.padding-15 {
+  padding: 15px !important;
+}
+
+.padding-20 {
+  padding: 20px !important;
+}
+
+.padding-25 {
+  padding: 25px !important;
+}
+
+.padding-30 {
+  padding: 30px !important;
+}
+
+.padding-35 {
+  padding: 35px !important;
+}
+
+.padding-40 {
+  padding: 40px !important;
+}
+
+.padding-100 {
+  padding: 100px !important;
+}
+
+.map-bg {
+  border-top: 1px solid #ddd;
+  background: url(/img/map2.png);
+  background-size: cover;
+  margin-bottom: -20px;
+  color: white;
+}
+.cu-header {
+  border-bottom: 1px solid #ddd;
+  padding: 20px 60px;
+  margin-bottom: 20px;
+}
+.cu-list {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.cu-list .cu-list-item {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+.cu-list .last {
+  border-bottom: none;
+}
+.cu-question {
+  font-weight: 900;
+  font-size: 90%;
+  color: #525252;
+  text-transform: uppercase;
+}
+.cu-txt-header {
+  font-weight: 800;
+  color: #525252;
+}
+.cu-icon {
+  color: darkmagenta;
+  font-size: 40px;
+  padding: 20px;
+  margin: 0;
+}
+.large-heading {
+  font-weight: 900;
+  color: white;
+  font-size: 45px;
+}
+
+.index-top {
+  padding: 100px;
+  text-align: center !important;
+}
+
+@media (max-width: 767px) {
+  .index-top {
+    padding: 50px;
+  }
+}
+
+@media (width: 768px) {
+  .index-top {
+    padding: 60px;
+  }
 }
