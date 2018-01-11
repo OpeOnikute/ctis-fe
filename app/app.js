@@ -168,7 +168,16 @@ app.run(['$rootScope', '$state', '$stateParams', '$location', '$trace', '$transi
                 logo: '/front/img/farmworthLogo.svg' // relative path of the project logo
             },
             apiURL: 'http://localhost:5000',
-            pollIntervalLength: 30000
+            pollIntervalLength: 30000,
+            icons: {
+                shuttle: '/img/icons/ic_directions_bus_black.png',
+                driving: '/img/icons/ic_directions_car_black.png',
+                transit: '/img/icons/ic_directions_bus_black.png',
+                user: '/img/icons/ic_person_pin_circle.png',
+                building: '/img/icons/building.png',
+                walking: '/img/icons/ic_directions_walk_black.png',
+                busStop: '/img/icons/bus-stop-1.png'
+            }
         };
 
         $trace.enable('TRANSITION');
@@ -181,64 +190,30 @@ app.config(function(blockUIConfig) {
 
 app.filter('capitalize', function() {
     return function(input) {
+        if (input === 'N/A') return input;
         return (input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : 'N/A';
     }
 });
 
-app.service('Map', ['$rootScope', 'httpFactory', 'blockUI', 'geoLocator', '$compile',
-    function($rootScope, httpFactory, blockUI, geoLocator, $compile) {
+app.service('Map', ['$rootScope', 'httpFactory', 'blockUI', 'geoLocator', '$compile', 'helpers',
+    function($rootScope, httpFactory, blockUI, geoLocator, $compile, helpers) {
 
     var self = this;
 
-    var mapBlockUI = blockUI.instances.get('mapBlockUI');
-
-    self.init = function(next) {
+    self.init = function(next, after) {
 
         var options = {
             center: new google.maps.LatLng(6.670385, 3.158345), //center of the map is the chapel
-            zoom: 17
+            zoom: 18
         };
 
         self.map = new google.maps.Map(
             document.getElementById("map"), options
         );
 
-        mapBlockUI.start({
-            message: 'Loading locations....'
-        });
-
-        //add the buildings to the map
-        httpFactory.getJson($rootScope.app.apiURL + '/locations/?type=building', {}, function (response) {
-
-            if (response.status === 'success') {
-                var locations = response.data;
-
-                for (var index in locations) {
-                    if (!locations.hasOwnProperty(index)) continue;
-                    var location = locations[index];
-
-                    var descriptionContent = location.description || '<small>No description is currently available.</small>';
-
-                    var content = '<div id="content">'+
-                        '<div id="siteNotice">'+
-                        '</div>'+
-                        '<h3 id="firstHeading" class="firstHeading">' + location.name + '</h3>'+
-                        '<div id="bodyContent">'+
-                        '<p>' + descriptionContent + '</p>'+
-                        '</div>'+
-                        '</div>';
-
-                    self.addMarker(location.longitude, location.latitude, location.name, content)
-                }
-            }
-
-            mapBlockUI.stop();
-
-            if (next) {
-                next();
-            }
-        });
-        // this.places = new google.maps.places.PlacesService(this.map);
+        if (next) {
+            next(after);
+        }
     };
 
     // this.search = function(str) {
@@ -252,13 +227,14 @@ app.service('Map', ['$rootScope', 'httpFactory', 'blockUI', 'geoLocator', '$comp
     //     return d.promise;
     // };
 
-    self.addMarker = function(long, lat, title, content) {
+    self.addMarker = function(long, lat, title, content, icon) {
 
         var marker = new google.maps.Marker({
             map: self.map,
             position: {lat: lat, lng: long},
             animation: google.maps.Animation.DROP,
-            title: title
+            title: title,
+            icon: icon || null
         });
 
         marker.setMap(self.map);
@@ -274,6 +250,10 @@ app.service('Map', ['$rootScope', 'httpFactory', 'blockUI', 'geoLocator', '$comp
             self.infoWindow.open(self.map, marker);
         });
     };
+
+    self.setCenter = function (lng, lat) {
+        self.map.setCenter(new google.maps.LatLng(lat,lng));
+    }
 }]);
 
 app.service('geoLocator', function () {
@@ -340,6 +320,59 @@ app.factory('formHelper', function ($rootScope) {
             };
 
             return buffer[str] || false;
+        }
+    }
+});
+
+app.factory('helpers', function ($rootScope, $filter) {
+    return {
+        parseDirectionContent: function (directions) {
+
+            var str = '<div class="line-bottom">' +
+                '<h4 class="cu-txt-header">Directions</h4>' +
+                '</div>';
+
+            if (!directions) return '';
+
+            //ensure it's not empty
+            if (angular.equals(directions, {})) return '';
+
+            for (var direction in directions) {
+                if (!directions.hasOwnProperty(direction)) continue;
+
+                var routes = directions[direction]['routes'];
+
+                if (!routes) continue;
+
+                if (routes.length <= 0) continue;
+
+                str +=' <div class="pad-vertical">' +
+                    '<p class="cu-txt-header"><strong>' +  $filter('capitalize')(direction) + '</strong> <span><img class="direction-image" src="' + $rootScope.app.icons[direction] + '"></span></p>' +
+                    '<p>' +
+                    '<small><strong>Routes:</strong> ' + routes.length + '</small>' +
+                    '</p>' +
+                    '<small>' +
+                    '<ul>';
+
+                for (var routeIndex in routes) {
+
+                    if (!routes.hasOwnProperty(routeIndex)) continue;
+
+                    var route = routes[routeIndex];
+
+                    str += '<li>' +
+                        '<p><strong>Distance:</strong> ' + route.distance.text + '</p>' +
+                        '<p><strong>Duration:</strong> ' + route.duration.text + '</p>' +
+                        // '<p><strong>Instructions:</strong> <p>' + route.html_instructions + '</p></p>' +
+                        '</li>';
+                }
+
+                str += '</ul>' +
+                    '</small>' +
+                    '</div>';
+            }
+
+            return str;
         }
     }
 });

@@ -80,6 +80,10 @@ body {
   margin-bottom: 10px;
 }
 
+.map-info-last {
+  border-bottom: none;
+}
+
 .map-info i {
   background-color: black;
   padding: 10px;
@@ -208,7 +212,7 @@ body {
 }
 
 .index-top {
-  padding: 100px;
+  padding: 140px 100px 100px;
   text-align: center !important;
 }
 
@@ -222,4 +226,43 @@ body {
   .index-top {
     padding: 60px;
   }
+}
+
+ /*BACKGROUND COLOUR STYLES*/
+.bg-black {
+  background-color: black !important;
+}
+
+.bg-darkmagenta {
+  background-color: darkmagenta !important;
+}
+
+.bg-green {
+  background-color: green !important;
+}
+
+.bg-red{
+  background-color: red !important;
+}
+
+.bg-blue{
+  background-color: blue !important;
+}
+
+.home-top {
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../img/bg1.jpg);
+  background-size: cover;
+  min-height: 400px;
+  color: white
+}
+
+.line-bottom {
+  border-bottom: 1px solid #ddd;
+}
+.pad-vertical {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.direction-image {
+  max-width: 25px !important;
 }

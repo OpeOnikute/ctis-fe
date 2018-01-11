@@ -6,34 +6,29 @@
         </div>
         <div class="map-container">
             <div class="map" id="map"></div>
-            <!--<div class="container-fluid">-->
-                <!--<div class="row" style="background-color:  darkmagenta;">-->
-                    <!--<p><i class="fa fa-clock-o" style="background-color: transparent;"></i> ESTIMATED DEPARTURE TIME</p>-->
-                <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
     <div class="container-fluid">
         <div class="map-info">
             <p><small>Number of available shuttles</small> </p>
-            <p><i class="fa fa-bus" ng-style="{{selectRandomColor()}}"></i> {{shuttleCount || 'N/A'}}</p>
+            <p><i class="fa fa-bus bg-black"></i> {{shuttleCount || 'N/A'}}</p>
         </div>
         <div class="map-info">
             <p>
                 <small>Departure location</small>
-                <span style="float: right;" ng-if="departureLocation !== userLocation">
+                <span style="float: right;" ng-if="departureLocation.latitude !== userLocation.latitude && departureLocation.longitude !== userLocation.longitude">
                     <a ng-click="resetDepartureLocation()" href="">Reset</a>
                 </span>
             </p>
-            <p><i class="fa fa-map" ng-style="{{selectRandomColor()}}"></i> {{ departureLocation.name || 'No departure location selected yet.'}}</p>
+            <p><i class="fa fa-map bg-green"></i> {{ departureLocation.name || 'No departure location selected yet.'}}</p>
         </div>
         <div class="map-info">
             <p><small>Time till next shuttle arrives</small> </p>
-            <p><i class="fa fa-clock-o" ng-style="{{selectRandomColor()}}"></i> {{nearestShuttle.distance_matrix.duration.text || 'N/A'}}</p>
+            <p><i class="fa fa-clock-o bg-red"></i> {{nearestShuttle.distance_matrix.duration.text || 'N/A'}}</p>
         </div>
-        <div class="map-info">
+        <div class="map-info map-info-last">
             <p><small>Type of shuttle</small> </p>
-            <p><i class="fa fa-bus"></i> {{nearestShuttle ?  nearestShuttle + ' size bus' : 'N/A'| capitalize}}</p>
+            <p><i class="fa fa-bus bg-darkmagenta"></i> {{nearestShuttle ?  nearestShuttle.size + ' size bus' : 'N/A'| capitalize}}</p>
         </div>
     </div>
 </div>

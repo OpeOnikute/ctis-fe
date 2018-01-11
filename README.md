@@ -21,6 +21,15 @@ Simply go to the map, to get useful information.
 - Do I need to pay for the service?
 No, it's entirely free.
 
+TO-DO:
+- When the user resets the departure location, make an api call to re-compute the distance of the next shuttle. *done (not tested)
+- When a location is set as the current departure location, the description should read "This is set as your current departure location. Click here to reset" *done (not tested)
+- Add admin functionality to change the icons of buildings
+- initialise the map to the user's current location *done (tested and passed)
+- get the accuracy of the geolocation down to about 3 meters.
+- switch off the driver mode when he logs out or the browser window is closed
+- add the directions functionality *done (remaining api)
+- fix the loading screen issues.
 
 # `angular-seed` — the seed for AngularJS apps
 
