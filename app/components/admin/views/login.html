@@ -1,4 +1,4 @@
-<div class="container-fluid" id="main" ng-controller="driverLoginCtrl">
+<div class="container-fluid" id="main" ng-controller="adminLoginCtrl">
     <div class="row text-center pad-vertical-md">
         <div class="col-md-3 col-md-offset-4">
             <div class="panel panel-white" style="padding: 15px;">
@@ -14,7 +14,7 @@
                         <div class="form-group">
                     <span class="input-icon">
                         <i class="fa fa-user"></i>
-                        <input class="form-control" type="email" ng-class="{'has-error': loginForm.email.$invalid && loginForm.email.$touched}" name="email" ng-model="user.email" placeholder="Email address" required>
+                        <input class="form-control" type="email" ng-class="{'has-error': loginForm.email.$invalid && loginForm.email.$touched}" name="email" ng-model="admin.email" placeholder="Email address" required>
                     </span>
 
                             <div class="help-block" ng-messages="loginForm.email.$error" ng-if="loginForm.email.$touched">
@@ -24,7 +24,7 @@
                         <div class="form-group">
                     <span class="input-icon">
                         <i class="fa fa-lock"></i>
-                        <input class="form-control" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$touched}" name="password" ng-model="user.password" type="password" placeholder="Password" required>
+                        <input class="form-control" ng-class="{'has-error': loginForm.password.$invalid && loginForm.password.$touched}" name="password" ng-model="admin.password" type="password" placeholder="Password" required>
                     </span>
 
                             <div class="help-block" ng-messages="loginForm.password.$error" ng-if="loginForm.password.$touched">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <p class="text-muted"><small>Don't have an account? <a ui-sref="driver.signup">Sign Up</a>.</small></p>
+                            <p class="text-muted"><small>Don't have an account? <a ui-sref="admin.signup">Sign Up</a>.</small></p>
                             <button class="btn btn-primary btn-round" ng-disabled="loginForm.$invalid||loading">Login <i class="fa fa-spinner fa-spin" ng-if="loading"></i></button>
                         </div>
                     </form>

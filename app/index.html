@@ -19,7 +19,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 </head>
 <body id="main-body" ng-controller="AppCtrl">
-<div ng-if="currState.name.indexOf('driver') === -1" style="margin-bottom: 90px;">
+<div ng-if="currState.name.indexOf('driver') === -1 && currState.name.indexOf('admin') === -1" style="margin-bottom: 90px;">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container" style="padding: 20px;">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -72,8 +72,6 @@
   <script src="controllers/AppCtrl.js"></script>
   <script src="controllers/homeCtrl.js"></script>
   <script src="controllers/mapCtrl.js"></script>
-  <script src="components/driver/js/controllers/shuttleTableCtrl.js"></script>
-  <script src="components/driver/js/directives.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

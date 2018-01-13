@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockUI', 'geoLocator', '$compile', '$filter', 'helpers',
-    function($scope, $rootScope, httpFactory, Map, blockUI, geoLocator, $compile, $filter, helpers) {
+app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory', 'Map', 'blockUI', 'geoLocator', '$compile', '$filter', 'helpers',
+    function($scope, $rootScope, modalHelper, httpFactory, Map, blockUI, geoLocator, $compile, $filter, helpers) {
 
     var mapBlockUI = blockUI.instances.get('mapBlockUI');
 
@@ -75,21 +75,32 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockU
 
     $scope.getUsersLocation = function (callback) {
 
-        geoLocator.getCurrentLocation(function (res) {
+        geoLocator.getCurrentLocation(
+            function (res) {
+                //passed as a callback to the map's init function cause we're adding markers
+                if (!res) {
+                    alert('We were not able to get your determine your current location. Please try a different browser, enable location in your browser settings.');
+                    callback(false);
+                }
 
-            //passed as a callback to the map's init function cause we're adding markers
-            if (!res) {
-                alert('We were not able to get your determine your current location. Please try a different browser, enable location in your browser settings.');
+                callback({
+                    latitude: res.coords.latitude,
+                    longitude: res.coords.longitude,
+                    name: 'Your current location',
+                    description: 'This is your current location.'
+                });
+            },
+            function (err) {
+                if (err.code === 1 || err.message === 'User denied Geolocation') {
+                    modalHelper.openModal({
+                        templateUrl: '/views/partial/modals/select_departure.html',
+                        controller: 'selectDepartureCtrl',
+                        locals: {}
+                    });
+                }
+
                 callback(false);
-            }
-
-            callback({
-                latitude: res.coords.latitude,
-                longitude: res.coords.longitude,
-                name: 'Your current location',
-                description: 'This is your current location.'
             });
-        });
     };
 
     $scope.addUsersLocationToMap =  function (next) {
@@ -100,7 +111,9 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockU
 
             $scope.loading = false;
 
-            if (!location) return;
+            if (!location) {
+                return next ? next() : false;
+            }
 
             $scope.userLocation = {
                 latitude: location.latitude,
@@ -250,9 +263,11 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockU
 
         $scope.getUsersLocation(function (location) {
 
-            $scope.userLocation = location;
+            if (location) {
+                $scope.userLocation = location;
 
-            $scope.executeShuttleGetRequest();
+                $scope.executeShuttleGetRequest();
+            }
         });
     };
 
@@ -317,4 +332,21 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockU
     };
 
     $scope.init();
+}]);
+
+app.controller('selectDepartureCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory', '$uibModalInstance',
+    function($scope, $rootScope, modalHelper, httpFactory, $uibModalInstance) {
+
+        httpFactory.getJson($rootScope.app.apiURL + '/locations', {type: 'bus_stop'}, function (response) {
+            if (response.status === 'success') {
+                $scope.busStops = response.data;
+            }
+        });
+
+
+        $scope.selectedBusStop = null;
+
+        $scope.close = function () {
+            $uibModalInstance.close($scope.selectedBusStop)
+        }
 }]);

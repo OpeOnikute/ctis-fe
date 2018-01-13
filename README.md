@@ -30,7 +30,12 @@ TO-DO:
 - switch off the driver mode when he logs out or the browser window is closed
 - add the directions functionality *done (remaining api)
 - fix the loading screen issues.
-
+- if the user's location can't be gotten, trigger a modal that tells them to select their departure location
+- admin:
+    - CRUD locations
+    - CRUD shuttles
+    - RUD users
+    - Edit profile
 # `angular-seed` — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS][angularjs] web app. You can use it

@@ -4,20 +4,19 @@
 <!-- sidebar -->
 <div class="sidebar app-aside hidden-print" id="sidebar" toggleable parent-active-class="app-slide-off" >
 	<div perfect-scrollbar wheel-propagation="false" suppress-scroll-x="true" class="sidebar-container">
-		<div data-ng-include=" 'components/driver/views/partials/sidebar.html' "></div>
+		<div data-ng-include=" 'components/admin/views/partials/sidebar.html' "></div>
 	</div>
 </div>
 <!-- / sidebar -->
 <div class="app-content" ng-class="{loading: loading}">
 	<!-- top navbar -->
-	<header data-ng-include=" 'components/driver/views/partials/top-navbar.html' " class="navbar navbar-default navbar-static-top hidden-print"></header>
+	<header data-ng-include=" 'components/admin/views/partials/top-navbar.html' " class="navbar navbar-default navbar-static-top hidden-print"></header>
 	<!-- / top navbar -->
 	<!-- main content -->
-	<div data-ng-include=" 'components/driver/views/partials/main-content.html' " class="main-content" ></div>
+	<div data-ng-include=" 'components/admin/views/partials/main-content.html' " class="main-content" ></div>
 	<!-- / main content -->
 </div>
 <!-- footer -->
-<footer data-ng-include=" 'components/driver/views/partials/footer.html' " class="hidden-print"></footer>
+<footer data-ng-include=" 'components/admin/views/partials/footer.html' " class="hidden-print"></footer>
 <!-- / footer -->
-<div data-ng-include=" 'components/driver/views/partials/off-sidebar.html' " id="off-sidebar" class="sidebar hidden-print" toggleable parent-active-class="app-offsidebar-open"></div>
-<div data-ng-include=" 'components/driver/views/partials/settings.html' " toggleable class="settings panel panel-default hidden-xs hidden-sm hidden-print" id="settings"></div>
+<div data-ng-include=" 'components/admin/views/partials/settings.html' " toggleable class="settings panel panel-default hidden-xs hidden-sm hidden-print" id="settings"></div>

@@ -58,7 +58,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
     }).state('driver', {
         url: "/driver",
         templateUrl: 'components/driver/views/index.html',
-        resolve: loadSequence('toaster', 'mainCtrl'),
+        resolve: loadSequence('toaster', 'mainCtrl', 'driverDirectives'),
         redirectTo: "/driver/dashboard"
     }).state('driver.dashboard', {
         url: "/dashboard",
@@ -71,6 +71,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
     }).state('driver.dashboard.shuttles', {
         url: "/shuttles",
         title: 'Driver - Shuttles',
+        resolve: loadSequence('driverShuttleTableCtrl'),
         ncyBreadcrumb: {
             label: 'Shuttles'
         }
@@ -90,6 +91,42 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
         url: "/signup",
         templateUrl: 'components/driver/views/signup.html',
         title: 'Driver - Sign Up'
+    }).state('admin', {
+        url: "/admin",
+        templateUrl: 'components/driver/views/index.html',
+        resolve: loadSequence('toaster', 'adminMainCtrl'),
+        redirectTo: "/driver/dashboard"
+    }).state('admin.login', {
+        url: "/login",
+        templateUrl: 'components/admin/views/login.html',
+        title: 'Admin - Login'
+    }).state('admin.signup', {
+        url: "/signup",
+        templateUrl: 'components/admin/views/signup.html',
+        title: 'Admin - Sign Up'
+    }).state('admin.dashboard', {
+        url: "/dashboard",
+        templateUrl: 'components/admin/views/app.html',
+        abstract: true
+    }).state('admin.dashboard.home', {
+        url: "",
+        templateUrl: 'components/admin/views/dashboard.html',
+        title: 'Admin - Dashboard'
+    }).state('admin.dashboard.shuttles', {
+        url: "/shuttles",
+        title: 'Admin - Shuttles',
+        resolve: loadSequence('adminShuttleTableCtrl'),
+        ncyBreadcrumb: {
+            label: 'Shuttles'
+        }
+    }).state('admin.dashboard.shuttles.manage', {
+        url: "/manage",
+        templateUrl: 'components/admin/views/manageShuttles.html',
+        title: 'Admin - Manage Shuttles'
+    }).state('admin.dashboard.shuttles.add', {
+        url: "/add",
+        templateUrl: 'components/admin/views/addShuttle.html',
+        title: 'Admin - Add New Shuttle'
     });
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
@@ -128,18 +165,30 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
     }
 }]);
 
+function requireAuth($rootScope, $state, $transitions, $location, stateName) {
+    $transitions.onBefore( { to: stateName + '.**' }, function(trans) {
+        var authProvider = trans.injector().get('authProvider');
+        // If isAuthenticated returns false, the transition is cancelled.
+        $rootScope.redirectUrl = '/'+ stateName + '/dashboard';
+
+        var toState = trans.to();
+
+        if (toState.name === stateName + '.signup') {
+            //allow only the signup page to be accessed
+            return;
+        }
+
+        if (!authProvider.isLoggedIn()) {
+            $state.target(stateName +'.login');
+        }
+    });
+}
+
 app.run(['$rootScope', '$state', '$stateParams', '$location', '$trace', '$transitions',
     function ($rootScope, $state, $stateParams, $location, $trace, $transitions) {
 
-        $transitions.onBefore( { to: 'driver.**' }, function(trans) {
-            var authProvider = trans.injector().get('authProvider');
-            // If isAuthenticated returns false, the transition is cancelled.
-            $rootScope.redirectUrl = '/driver/dashboard';
-
-            if (!authProvider.isLoggedIn()) {
-                $location.path('/driver/login');
-            }
-        });
+        requireAuth($rootScope, $state, $transitions, $location, 'driver');
+        requireAuth($rootScope, $state, $transitions, $location, 'admin');
 
         // Set some reference to access them from any scope
         $rootScope.$state = $state;
@@ -195,8 +244,7 @@ app.filter('capitalize', function() {
     }
 });
 
-app.service('Map', ['$rootScope', 'httpFactory', 'blockUI', 'geoLocator', '$compile', 'helpers',
-    function($rootScope, httpFactory, blockUI, geoLocator, $compile, helpers) {
+app.service('Map', function() {
 
     var self = this;
 
@@ -254,22 +302,43 @@ app.service('Map', ['$rootScope', 'httpFactory', 'blockUI', 'geoLocator', '$comp
     self.setCenter = function (lng, lat) {
         self.map.setCenter(new google.maps.LatLng(lat,lng));
     }
-}]);
+});
 
 app.service('geoLocator', function () {
 
     var self = this;
 
-    self.getCurrentLocation = function (callback) {
+    self.getCurrentLocation = function (callback, errCallback) {
 
         if (!navigator.geolocation) {
             return callback(false);
         }
 
         //returns position.coords.latitude and position.coords.longitude
-        return navigator.geolocation.getCurrentPosition(callback);
+        //provide the same callback as both success and error callback
+        return navigator.geolocation.getCurrentPosition(callback, errCallback);
     }
+});
 
+app.factory('modalHelper', function ($uibModal) {
+
+    return {
+        openModal: function (options) {
+            return $uibModal.open({
+                animation: options.animationsEnabled || true,
+                templateUrl: options.templateUrl,
+                controller: options.controller,
+                size: options.size,
+                resolve: options.locals || {}
+            });
+        },
+        dismissModal:  function ($uibModalInstance, reason) {
+            return $uibModalInstance.dismiss(reason);
+        },
+        closeModal:  function ($uibModalInstance, selected) {
+            return $uibModalInstance.close(selected);
+        }
+    };
 });
 
 app.factory('authProvider', function ($rootScope, $sessionStorage) {

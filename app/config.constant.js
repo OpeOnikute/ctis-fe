@@ -15,7 +15,11 @@ app.constant('JS_REQUIRES', {
         //*** Controllers
         'mapCtrl': 'controllers/mapCtrl.js',
         'homeCtrl': 'controllers/homeCtrl.js',
-        'mainCtrl': 'components/driver/js/controllers/mainCtrl.js'
+        'mainCtrl': 'components/driver/js/controllers/mainCtrl.js',
+        'adminMainCtrl': 'components/admin/js/controllers/mainCtrl.js',
+        'adminShuttleTableCtrl': 'components/admin/js/controllers/shuttleTableCtrl.js',
+        'driverShuttleTableCtrl': 'components/driver/js/controllers/shuttleTableCtrl.js',
+        'driverDirectives': 'components/driver/js/directives.js'
     },
     //*** angularJS Modules
     modules: [{

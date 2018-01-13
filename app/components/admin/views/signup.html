@@ -1,4 +1,4 @@
-<div class="container-fluid" id="main" ng-controller="driverSignupCtrl">
+<div class="container-fluid" id="main" ng-controller="adminSignupCtrl">
     <div class="row text-center pad-vertical-md">
         <div class="col-md-3 col-md-offset-4">
             <div class="panel panel-white" style="padding: 15px;">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <p class="text-muted"><small>Already have an account? <a ui-sref="driver.login">Sign In</a>.</small></p>
+                            <p class="text-muted"><small>Already have an account? <a ui-sref="admin.login">Sign In</a>.</small></p>
                             <button class="btn btn-primary btn-round" ng-disabled="signupForm.$invalid||loading">Sign Up <i class="fa fa-spinner fa-spin" ng-if="loading"></i></button>
                         </div>
                     </form>

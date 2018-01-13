@@ -266,3 +266,6 @@ body {
 .direction-image {
   max-width: 25px !important;
 }
+.modal {
+  display: block !important;
+}

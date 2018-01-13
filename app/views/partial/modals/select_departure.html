@@ -1,18 +1,17 @@
-<div class="modal" tabindex="-1" role="dialog" id="infoModal">
+<div class="modal" tabindex="-1" role="dialog" id="infoModal" ng-controller="selectDepartureCtrl">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="dismissModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <h3>Oops!</h3>
+                <p>We could not get your location.</p>
+                <p>Please select one of the bus-stops below, to set it as your departure location.</p>
+
+                <select ng-if="busStops">
+                    <option ng-repeat="busStop in busStops" ng-click="setDepartureLocation(busStop._id)">{{busStop.name}}</option>
+                </select>
             </div>
         </div>
     </div>

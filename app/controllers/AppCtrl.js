@@ -1,6 +1,7 @@
 'use strict';
 
-app.controller('AppCtrl', ['$rootScope', '$transitions', '$state', function($rootScope, $transitions, $state) {
+app.controller('AppCtrl', ['$rootScope', '$scope', '$transitions', '$state',
+    function($rootScope, $scope, $transitions, $state) {
 
     $transitions.onSuccess({}, function (trans) {
         // Save the route title

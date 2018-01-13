@@ -10,7 +10,7 @@
 <div class="container-fluid container-fullw bg-white ng-scope">
 	<div class="row">
 		<div class="col-sm-12">
-			<div ng-controller="shuttleTableCtrl">
+			<div ng-controller="adminShuttleTableCtrl">
 				<div class="table-responsive">
 					<table ng-table="tableParams" class="table">
 						<tbody ng-repeat="p in data">
@@ -29,12 +29,12 @@
 							</td>
 						</tr>
 						<tr ng-show="editId===p.shuttle_id" ng-if="editId===p.shuttle_id">
-							<td colspan="7" ng-include src="'components/driver/views/editShuttleRow.html'"></td>
+							<td colspan="7" ng-include src="'components/admin/views/editShuttleRow.html'"></td>
 						</tr>
 						</tbody>
 					</table>
 					<div class="text-center">
-						<p ng-if="!loading && !data.length">Looks like you don't have any shuttles yet. Go ahead and <a ui-sref="driver.dashboard.shuttles.manage">add one</a>.</p>
+						<p ng-if="!loading && !data.length">Looks like you don't have any shuttles yet. Go ahead and <a ui-sref="admin.dashboard.shuttles.manage">add one</a>.</p>
 						<span ng-if="loading"><i class="fa fa-spinner fa-spin"></i></span>
 					</div>
 				</div>

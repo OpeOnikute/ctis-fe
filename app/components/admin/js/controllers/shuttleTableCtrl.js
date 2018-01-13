@@ -1,27 +1,9 @@
 'use strict';
 
-app.controller('shuttleTableCtrl', ['$rootScope', '$scope', '$http', 'toaster', 'httpFactory',
+app.controller('adminShuttleTableCtrl', ['$rootScope', '$scope', '$http', 'toaster', 'httpFactory',
     function($rootScope, $scope, $http, toaster, httpFactory) {
 
         $scope.loading = true;
-
-        $scope.getShuttleDetails = function () {
-
-            httpFactory.getJson($rootScope.app.apiURL + '/shuttles?user_id=' + $rootScope.user._id, {}, function(response){
-
-                if (response.status !== 'success') {
-                    toaster.pop('error', 'Error', response.message || 'An error occurred. Please try again.');
-                    return;
-                }
-
-                $scope.data = response.data;
-
-                $scope.loading = false;
-            });
-        };
-
-        //Invoke the function immediately.
-        $scope.getShuttleDetails();
 
         $scope.editId = -1;
 
