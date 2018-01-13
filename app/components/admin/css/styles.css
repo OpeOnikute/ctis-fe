@@ -4596,7 +4596,7 @@ a.text-light:hover {
 }
 
 .label-default {
-  background-color: darkmagenta;
+  background-color: #3CA700 !important;
 }
 
 .label {

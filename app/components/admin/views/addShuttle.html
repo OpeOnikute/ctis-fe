@@ -18,11 +18,26 @@
 						</legend>
 						<div class="form-group">
 							<label>
+								Driver <span class="symbol required"></span>
+							</label>
+							<div class="form-group" ng-if="drivers">
+								<ui-select ng-model="shuttle.driver" theme="bootstrap">
+									<ui-select-match placeholder="Select in the list..." required>
+										{{$select.selected.firstName + ' ' + $select.selected.lastName}}
+									</ui-select-match>
+									<ui-select-choices repeat="f in drivers | filter: $select.search">
+										<div ng-bind-html="f.firstName + ' ' + f.lastName | highlight: $select.search"></div>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div ng-if="loadingDrivers"><i class="fa fa-spinner fa-spin"></i></div>
+						</div>
+						<div class="form-group">
+							<label>
 								Brand <span class="symbol required"></span>
 							</label>
 							<div class="form-group">
 								<input name="brand" ng-model="shuttle.brand" class="form-control" ng-class="{'has-error': createShuttleForm.brand.$invalid && createShuttleForm.brand.$touched}" required>
-
 								<div class="help-block" ng-messages="createShuttleForm.brand.$error" ng-if="createShuttleForm.brand.$touched">
 									<div ng-messages-include="views/partial/formMessages.html"></div>
 								</div>

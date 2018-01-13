@@ -17,9 +17,10 @@ app.constant('JS_REQUIRES', {
         'homeCtrl': 'controllers/homeCtrl.js',
         'mainCtrl': 'components/driver/js/controllers/mainCtrl.js',
         'adminMainCtrl': 'components/admin/js/controllers/mainCtrl.js',
-        'adminShuttleTableCtrl': 'components/admin/js/controllers/shuttleTableCtrl.js',
+        'adminTableCtrl': 'components/admin/js/controllers/tableCtrl.js',
         'driverShuttleTableCtrl': 'components/driver/js/controllers/shuttleTableCtrl.js',
-        'driverDirectives': 'components/driver/js/directives.js'
+        'driverDirectives': 'components/driver/js/directives.js',
+        'adminDirectives': 'components/admin/js/directives.js'
     },
     //*** angularJS Modules
     modules: [{
@@ -28,5 +29,8 @@ app.constant('JS_REQUIRES', {
     },{
         name: 'toaster',
         files: ['components/driver/bower_components/AngularJS-Toaster/toaster.js', 'components/driver/bower_components/AngularJS-Toaster/toaster.css']
+    }, {
+        name: 'ui.select',
+        files: ['components/admin/bower_components/angular-ui-select/dist/select.min.js', 'components/admin/bower_components/angular-ui-select/dist/select.min.css', 'components/admin/bower_components/select2/dist/css/select2.min.css', 'components/admin/bower_components/select2-bootstrap-css/select2-bootstrap.min.css', 'components/admin/bower_components/selectize/dist/css/selectize.bootstrap3.css']
     }]
 });

@@ -1,0 +1,43 @@
+<table class="table no-bg">
+	<tr>
+		<td>Name:</td>
+		<td>
+		<input class="form-control w100" name="name"  ng-model="l.name">
+		</td>
+		<td>Description:</td>
+		<td>
+			<input class="form-control w100" name="description"  ng-model="l.description">
+		</td>
+		<td>Type:</td>
+		<td>
+			<select class="form-control w180" name="ac" ng-model="l.ac">
+				<option ng-repeat="locationType in locationTypes" value="{{locationType}}">{{locationType.replace('_', ' ')|capitalize}}</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Latitude:</td>
+		<td>
+			<input class="form-control w100" name="latitude" type="number" ng-model="l.latitude">
+		</td>
+		<td>Longitude:</td>
+		<td>
+			<input class="form-control w100" name="longitude" type="number" ng-model="l.longitude">
+		</td>
+		<td>Status:</td>
+		<td>
+			<select class="form-control w180" name="status" ng-model="l.status">
+				<option value="enabled">Enabled</option>
+				<option value="disabled">Disabled</option>
+				<option value="blocked">Blocked</option>
+			</select>
+		</td>
+		<td colspan="4">
+			<div class="pull-right">
+				<input type="button" class="btn btn-primary btn-sm margin-right-15" value=" save " ng-disabled="loading" ng-click="updateShuttle()">
+				<input type="button" class="btn btn-primary btn-sm" value=" cancel" ng-disabled="loading" ng-click="setEditId(-1)">
+			</div>
+		</td>
+	</tr>
+</table>
+<!--  class="editRowTd" -->

@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-sm-7">
 			<h1 class="mainTitle">ADD A NEW SHUTTLE</h1>
-			<span class="mainDescription">This is where you can add a new shuttle that you drive.</span>
+			<span class="mainDescription">This is where you can add a new shuttle.</span>
 		</div>
 	</div>
 </section>
@@ -45,7 +45,7 @@
 								 Does the shuttle have an air conditioner?
 							</label>
 							<div class="form-group">
-								<select name="ac" ng-model="shuttle.ac" ng-class="{'has-error': createFarmForm.ac.$invalid && createFarmForm.ac.$touched}" class="form-control" required>
+								<select name="ac" ng-model="shuttle.ac" ng-class="{'has-error': createshuttleForm.ac.$invalid && createshuttleForm.ac.$touched}" class="form-control" required>
 									<option value="true">Yes</option>
 									<option value="false">No</option>
 								</select>
@@ -60,7 +60,7 @@
 								 What's the size of the shuttle?
 							</label>
 							<div class="form-group">
-								<select name="size" ng-model="shuttle.size" ng-class="{'has-error': createFarmForm.size.$invalid && createFarmForm.size.$touched}" class="form-control" required>
+								<select name="size" ng-model="shuttle.size" ng-class="{'has-error': createshuttleForm.size.$invalid && createshuttleForm.size.$touched}" class="form-control" required>
 									<option value="small">Small (Car)</option>
 									<option value="medium">Medium-size bus</option>
 									<option value="full">Full-size bus</option>

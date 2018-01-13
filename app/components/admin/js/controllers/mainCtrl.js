@@ -161,6 +161,22 @@ app.controller('createShuttleCtrl', ['$rootScope', '$scope', '$http', 'toaster',
 
         $scope.shuttle = {};
 
+        $scope.loadingDrivers = true;
+
+        httpFactory.getJson($scope.app.apiURL + '/drivers/', {}, function(response) {
+
+            $scope.loadingDrivers = false;
+
+            var status = response.status || 'error';
+
+            if (status !== 'success') {
+                toaster.pop(status, status.toUpperCase(), response.message || 'An error occurred and we could not get the drivers. Please try again.');
+                return;
+            }
+
+            $scope.drivers = response.data;
+        });
+
         $scope.createShuttle = function (formValid) {
 
             if (!formValid) {
@@ -177,8 +193,7 @@ app.controller('createShuttleCtrl', ['$rootScope', '$scope', '$http', 'toaster',
 
             $scope.loading = true;
 
-
-            httpFactory.postJson($scope.app.apiURL + '/shuttles/' + $rootScope.user._id, $scope.shuttle, function(response) {
+            httpFactory.postJson($scope.app.apiURL + '/shuttles/' + $scope.shuttle.driver._id, $scope.shuttle, function(response) {
 
                 $scope.loading = false;
 
@@ -196,6 +211,90 @@ app.controller('createShuttleCtrl', ['$rootScope', '$scope', '$http', 'toaster',
                 formHelper.resetForm('createShuttleForm');
 
                 toaster.pop(status, status.toUpperCase(), response.message || 'Shuttle created successfully.');
+            });
+        };
+    }]);
+
+app.controller('createUserCtrl', ['$rootScope', '$scope', '$http', 'toaster', 'httpFactory', 'formHelper',
+    function ($rootScope, $scope, $http, toaster, httpFactory, formHelper) {
+
+        $scope.user = {};
+
+        $scope.createUser = function (formValid) {
+
+            if (!formValid) {
+                toaster.pop('error', 'Form Invalid', 'The form you filled seems to be invalid.');
+                return;
+            }
+
+            if (!$scope.user) {
+                toaster.pop('error', 'Technical issue', 'An error occurred. Please try again.');
+                return;
+            }
+
+            $scope.loading = true;
+
+            httpFactory.postJson($scope.app.apiURL + '/users/', $scope.user, function(response) {
+
+                $scope.loading = false;
+
+                var status = response.status || 'error';
+
+                if (status !== 'success') {
+                    toaster.pop(status, status.toUpperCase(), response.message || 'An error occurred. Please try again.');
+                    return;
+                }
+
+                $scope.user = {};
+
+                $rootScope.createUserForm = $scope.createUserForm;
+                //clear the form inputs
+                formHelper.resetForm('createUserForm');
+
+                toaster.pop(status, status.toUpperCase(), response.message || 'User created successfully.');
+            });
+        };
+    }]);
+
+app.controller('createLocationCtrl', ['$rootScope', '$scope', '$http', 'toaster', 'httpFactory', 'formHelper',
+    function ($rootScope, $scope, $http, toaster, httpFactory, formHelper) {
+
+        $scope.locationTypes = $rootScope.app.locationTypes;
+
+        $scope.location = {};
+
+        $scope.createLocation = function (formValid) {
+
+            if (!formValid) {
+                toaster.pop('error', 'Form Invalid', 'The form you filled seems to be invalid.');
+                return;
+            }
+
+            if (!$scope.location) {
+                toaster.pop('error', 'Technical issue', 'An error occurred. Please try again.');
+                return;
+            }
+
+            $scope.loading = true;
+
+            httpFactory.postJson($scope.app.apiURL + '/locations/', $scope.location, function(response) {
+
+                $scope.loading = false;
+
+                var status = response.status || 'error';
+
+                if (status !== 'success') {
+                    toaster.pop(status, status.toUpperCase(), response.message || 'An error occurred. Please try again.');
+                    return;
+                }
+
+                $scope.location = {};
+
+                $rootScope.createLocationForm = $scope.createLocationForm;
+                //clear the form inputs
+                formHelper.resetForm('createLocationForm');
+
+                toaster.pop(status, status.toUpperCase(), response.message || 'Location created successfully.');
             });
         };
     }]);

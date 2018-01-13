@@ -31,6 +31,7 @@ TO-DO:
 - add the directions functionality *done (remaining api)
 - fix the loading screen issues.
 - if the user's location can't be gotten, trigger a modal that tells them to select their departure location
+- fix the table titles in the admin
 - admin:
     - CRUD locations
     - CRUD shuttles

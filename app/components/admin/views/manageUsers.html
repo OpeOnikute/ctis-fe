@@ -1,0 +1,42 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="title" class="padding-top-15 padding-bottom-15" xmlns="http://www.w3.org/1999/html">
+	<div class="row">
+		<div class="col-sm-7">
+			<h1 class="mainTitle">MANAGE USERS</h1>
+			<span class="mainDescription">This is where you can view and edit all users.</span>
+		</div>
+	</div>
+</section>
+<div class="container-fluid container-fullw bg-white ng-scope">
+	<div class="row">
+		<div class="col-sm-12">
+			<div ng-controller="userTableCtrl">
+				<div class="table-responsive">
+					<table ng-table="tableParams" class="table">
+						<tbody ng-repeat="u in data">
+						<tr id="tr{{u._id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+							<td class="rowTd" data-title="'First Name'">{{u.firstName | capitalize}}</td>
+							<td class="rowTd" data-title="'Last Name'">{{u.lastName | capitalize}}</td>
+							<td class="rowTd" data-title="'Account Type'">{{u.accountType | capitalize}}</td>
+							<td class="rowTd" data-title="'Status'"><span ng-class="{'label label-default': u.status === 'enabled', 'label label-danger': u.status === 'disabled' || u.status === 'blocked', 'label label-warning': u.status === 'pending'}">{{u.status || 'N/A'}}</span></td>
+							<td class="rowTd" data-title="'Created'">{{u.created}}</td>
+							<td class="rowTd" >
+								<div class="pull-right margin-right-10">
+									<input type=button class="btn btn-primary btn-o btn-sm" id="editRowBtn{{p.shuttle_id}}" value="edit"
+										   ng-click="setEditId(u._id, u)">
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="editId===u._id" ng-if="editId===u._id">
+							<td colspan="7" ng-include src="'components/admin/views/editUserRow.html'"></td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="text-center">
+						<span ng-if="loading"><i class="fa fa-spinner fa-spin" style="font-size: 50px;"></i></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

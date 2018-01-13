@@ -1,0 +1,25 @@
+<table class="table no-bg">
+	<tr>
+		<td>First Name:</td>
+		<td>
+			<input class="form-control w100" name="firstName"  ng-model="u.firstName">
+		</td>
+		<td>Last Name:</td>
+		<td>
+			<input class="form-control w100" name="lastName"  ng-model="u.lastName">
+		</td>
+	</tr>
+	<tr>
+		<td>Email:</td>
+		<td>
+			<input class="form-control w100" name="email"  ng-model="u.email">
+		</td>
+		<td colspan="4">
+			<div class="pull-right">
+				<input type="button" class="btn btn-primary btn-sm margin-right-15" value=" save " ng-disabled="loading" ng-click="updateUser()">
+				<input type="button" class="btn btn-primary btn-sm" value=" cancel" ng-disabled="loading" ng-click="setEditId(-1)">
+			</div>
+		</td>
+	</tr>
+</table>
+<!--  class="editRowTd" -->

@@ -1,0 +1,100 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="page-title" class="padding-top-15 padding-bottom-15" xmlns="http://www.w3.org/1999/html">
+	<div class="row">
+		<div class="col-sm-7">
+			<h1 class="mainTitle">ADD A NEW USER</h1>
+		</div>
+	</div>
+</section>
+<div class="container-fluid container-fullw bg-white ng-scope" ng-controller="createUserCtrl">
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="createUserForm" ng-submit="createUser(createUserForm.$valid)">
+				<div class="col-md-6">
+					<fieldset>
+						<legend>
+							Basic Information
+						</legend>
+						<div class="form-group">
+							<label>
+								First Name <span class="symbol required"></span>
+							</label>
+
+							<div class="form-group">
+								<input class="form-control" ng-class="{'has-error': createUserForm.firstName.$invalid && createUserForm.firstName.$touched}" name="firstName" ng-model="user.firstName" placeholder="First Name" required>
+
+								<div class="help-block" ng-messages="createUserForm.firstName.$error" ng-if="createUserForm.firstName.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								Last Name <span class="symbol required"></span>
+							</label>
+
+							<div class="form-group">
+								<input class="form-control" ng-class="{'has-error': createUserForm.lastName.$invalid && createUserForm.lastName.$touched}" name="lastName" ng-model="user.lastName" placeholder="Last Name" required>
+
+								<div class="help-block" ng-messages="createUserForm.lastName.$error" ng-if="createUserForm.lastName.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								Email Address <span class="symbol required"></span>
+							</label>
+
+							<div class="form-group">
+								<input class="form-control" type="email" ng-class="{'has-error': createUserForm.email.$invalid && createUserForm.email.$touched}" name="email" ng-model="user.email" placeholder="Email address" required>
+
+								<div class="help-block" ng-messages="createUserForm.email.$error" ng-if="createUserForm.email.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								Account Type <span class="symbol required"></span>
+							</label>
+
+							<div class="form-group">
+
+								<select class="form-control" ng-class="{'has-error': createUserForm.accountType.$invalid && createUserForm.accountType.$touched}" name="accountType" ng-model="user.accountType" required>
+									<option value="admin">Admin</option>
+									<option value="driver">Driver</option>
+									<option value="user">User</option>
+								</select>
+
+								<div class="help-block" ng-messages="createUserForm.accountType.$error" ng-if="createUserForm.accountType.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								Password <span class="symbol required"></span>
+							</label>
+
+							<div class="form-group">
+								<input class="form-control" ng-class="{'has-error': createUserForm.password.$invalid && createUserForm.password.$touched}" name="password" ng-model="user.password" type="password" placeholder="Password" required>
+
+								<div class="help-block" ng-messages="createUserForm.password.$error" ng-if="createUserForm.password.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group margin-bottom-0">
+						<button class="btn btn-o btn-primary" ng-disabled="createUserForm.$invalid||loading">
+							Create User <i class="fa fa-spinner fa-spin" ng-if="loading"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

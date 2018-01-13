@@ -2,8 +2,8 @@
 <section id="title" class="padding-top-15 padding-bottom-15" xmlns="http://www.w3.org/1999/html">
 	<div class="row">
 		<div class="col-sm-7">
-			<h1 class="mainTitle">MANAGE YOUR SHUTTLES</h1>
-			<span class="mainDescription">This is where you can view all your shuttles and edit them based on your needs.</span>
+			<h1 class="mainTitle">MANAGE SHUTTLES</h1>
+			<span class="mainDescription">This is where you can view all shuttles and edit them based on your needs.</span>
 		</div>
 	</div>
 </section>
@@ -34,8 +34,7 @@
 						</tbody>
 					</table>
 					<div class="text-center">
-						<p ng-if="!loading && !data.length">Looks like you don't have any shuttles yet. Go ahead and <a ui-sref="admin.dashboard.shuttles.manage">add one</a>.</p>
-						<span ng-if="loading"><i class="fa fa-spinner fa-spin"></i></span>
+						<span ng-if="loading"><i class="fa fa-spinner fa-spin" style="font-size: 50px;"></i></span>
 					</div>
 				</div>
 			</div>

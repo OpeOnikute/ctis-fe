@@ -14,6 +14,7 @@ var app = angular.module('myApp', [
     'myApp.version',
     'blockUI',
     'ngStorage',
+    'ngSanitize',
     'oc.lazyLoad',
     'ngMessages'
 ]);
@@ -93,9 +94,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
         title: 'Driver - Sign Up'
     }).state('admin', {
         url: "/admin",
-        templateUrl: 'components/driver/views/index.html',
-        resolve: loadSequence('toaster', 'adminMainCtrl'),
-        redirectTo: "/driver/dashboard"
+        templateUrl: 'components/admin/views/index.html',
+        resolve: loadSequence('toaster', 'adminMainCtrl', 'adminDirectives'),
+        redirectTo: "/admin/dashboard"
     }).state('admin.login', {
         url: "/login",
         templateUrl: 'components/admin/views/login.html',
@@ -115,7 +116,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
     }).state('admin.dashboard.shuttles', {
         url: "/shuttles",
         title: 'Admin - Shuttles',
-        resolve: loadSequence('adminShuttleTableCtrl'),
+        resolve: loadSequence('adminTableCtrl'),
         ncyBreadcrumb: {
             label: 'Shuttles'
         }
@@ -126,7 +127,40 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
     }).state('admin.dashboard.shuttles.add', {
         url: "/add",
         templateUrl: 'components/admin/views/addShuttle.html',
+        resolve: loadSequence('ui.select'),
         title: 'Admin - Add New Shuttle'
+    }).state('admin.dashboard.users', {
+        url: "/users",
+        title: 'Admin - Users',
+        resolve: loadSequence('adminTableCtrl'),
+        ncyBreadcrumb: {
+            label: 'Shuttles'
+        }
+    }).state('admin.dashboard.users.manage', {
+        url: "/manage",
+        templateUrl: 'components/admin/views/manageUsers.html',
+        title: 'Admin - Manage users'
+    }).state('admin.dashboard.users.add', {
+        url: "/add",
+        templateUrl: 'components/admin/views/addUser.html',
+        resolve: loadSequence('ui.select'),
+        title: 'Admin - Add New User'
+    }).state('admin.dashboard.locations', {
+        url: "/locations",
+        title: 'Admin - Locations',
+        resolve: loadSequence('adminTableCtrl'),
+        ncyBreadcrumb: {
+            label: 'Shuttles'
+        }
+    }).state('admin.dashboard.locations.manage', {
+        url: "/manage",
+        templateUrl: 'components/admin/views/manageLocations.html',
+        title: 'Admin - Manage locations'
+    }).state('admin.dashboard.locations.add', {
+        url: "/add",
+        templateUrl: 'components/admin/views/addLocation.html',
+        resolve: loadSequence('ui.select'),
+        title: 'Admin - Add New Location'
     });
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
@@ -173,13 +207,12 @@ function requireAuth($rootScope, $state, $transitions, $location, stateName) {
 
         var toState = trans.to();
 
-        if (toState.name === stateName + '.signup') {
-            //allow only the signup page to be accessed
-            return;
-        }
-
         if (!authProvider.isLoggedIn()) {
-            $state.target(stateName +'.login');
+            //allow only the signup page to be accessed
+
+            if (toState.name !== stateName + '.signup') {
+                $location.path('/' + stateName +'/login');
+            }
         }
     });
 }
@@ -218,6 +251,7 @@ app.run(['$rootScope', '$state', '$stateParams', '$location', '$trace', '$transi
             },
             apiURL: 'http://localhost:5000',
             pollIntervalLength: 30000,
+            locationTypes: ['bus_stop', 'building'],
             icons: {
                 shuttle: '/img/icons/ic_directions_bus_black.png',
                 driving: '/img/icons/ic_directions_car_black.png',
@@ -240,6 +274,7 @@ app.config(function(blockUIConfig) {
 app.filter('capitalize', function() {
     return function(input) {
         if (input === 'N/A') return input;
+        input = input.replace('_', ' ');
         return (input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : 'N/A';
     }
 });

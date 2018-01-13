@@ -39,6 +39,54 @@
 			</li>
 		</ul>
 	</li>
+	<li ng-class="{'active open':$state.includes('admin.dashboard.users')}">
+		<a href="javascript:void(0)">
+			<div class="item-content">
+				<div class="item-media">
+					<i class="fa fa-user-o"></i>
+				</div>
+				<div class="item-inner">
+					<span class="title"> Users </span><i class="icon-arrow"></i>
+				</div>
+			</div>
+		</a>
+		<ul class="sub-menu">
+			<li ui-sref-active="active">
+				<a ui-sref="admin.dashboard.users.manage">
+					<span class="title"> Manage Users</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="admin.dashboard.users.add">
+					<span class="title"> Add New User</span>
+				</a>
+			</li>
+		</ul>
+	</li>
+	<li ng-class="{'active open':$state.includes('admin.dashboard.locations')}">
+		<a href="javascript:void(0)">
+			<div class="item-content">
+				<div class="item-media">
+					<i class="fa fa-map-pin"></i>
+				</div>
+				<div class="item-inner">
+					<span class="title"> Locations </span><i class="icon-arrow"></i>
+				</div>
+			</div>
+		</a>
+		<ul class="sub-menu">
+			<li ui-sref-active="active">
+				<a ui-sref="admin.dashboard.locations.manage">
+					<span class="title"> Manage Locations</span>
+				</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="admin.dashboard.locations.add">
+					<span class="title"> Add New Location</span>
+				</a>
+			</li>
+		</ul>
+	</li>
 	<li>
 		<a href="javascript:void(0)">
 			<div class="item-content">
