@@ -1,0 +1,65 @@
+<div class="container-fluid" id="main" ng-controller="driverSignupCtrl">
+    <div class="row text-center pad-vertical-md">
+        <div class="col-md-3 col-md-offset-4">
+            <div class="panel panel-white" style="padding: 15px;">
+                <div class="panel-body">
+                    <div class="text-header mg-header">
+                        <h3>Sign Up</h3>
+                    </div>
+                    <div class="alert alert-dismissable" ng-class="{'alert-success': serverResponse.status === 'success', 'alert-danger': serverResponse.status === 'error'}" ng-if="serverResponse">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p>{{serverResponse.message}}</p>
+                    </div>
+                    <form name="signupForm" ng-submit="submitForm(signupForm.$valid)" novalidate>
+                        <div class="form-group">
+                    <span class="input-icon">
+                        <i class="fa fa-user"></i>
+                        <input class="form-control" ng-class="{'has-error': signupForm.firstName.$invalid && signupForm.firstName.$touched}" name="firstName" ng-model="user.firstName" placeholder="First Name" required>
+                    </span>
+
+                            <div class="help-block" ng-messages="signupForm.firstName.$error" ng-if="signupForm.firstName.$touched">
+                                <div ng-messages-include="views/partial/formMessages.html"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                    <span class="input-icon">
+                        <i class="fa fa-user"></i>
+                        <input class="form-control" ng-class="{'has-error': signupForm.lastName.$invalid && signupForm.lastName.$touched}" name="lastName" ng-model="user.lastName" placeholder="Last Name" required>
+                    </span>
+
+                            <div class="help-block" ng-messages="signupForm.lastName.$error" ng-if="signupForm.lastName.$touched">
+                                <div ng-messages-include="views/partial/formMessages.html"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                    <span class="input-icon">
+                        <i class="fa fa-user"></i>
+                        <input class="form-control" type="email" ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}" name="email" ng-model="user.email" placeholder="Email address" required>
+                    </span>
+
+                            <div class="help-block" ng-messages="signupForm.email.$error" ng-if="signupForm.email.$touched">
+                                <div ng-messages-include="views/partial/formMessages.html"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                    <span class="input-icon">
+                        <i class="fa fa-lock"></i>
+                        <input class="form-control" ng-class="{'has-error': signupForm.password.$invalid && signupForm.password.$touched}" name="password" ng-model="user.password" type="password" placeholder="Password" required>
+                    </span>
+
+                            <div class="help-block" ng-messages="signupForm.password.$error" ng-if="signupForm.password.$touched">
+                                <div ng-messages-include="views/partial/formMessages.html"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-muted"><small>Already have an account? <a ui-sref="driver.login">Sign In</a>.</small></p>
+                            <button class="btn btn-primary btn-round" ng-disabled="signupForm.$invalid||loading">Sign Up <i class="fa fa-spinner fa-spin" ng-if="loading"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-ng-include=" 'views/partial/footer.html' "></div>

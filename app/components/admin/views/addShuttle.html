@@ -1,0 +1,86 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="page-title" class="padding-top-15 padding-bottom-15" xmlns="http://www.w3.org/1999/html">
+	<div class="row">
+		<div class="col-sm-7">
+			<h1 class="mainTitle">ADD A NEW SHUTTLE</h1>
+			<span class="mainDescription">This is where you can add a new shuttle that you drive.</span>
+		</div>
+	</div>
+</section>
+<div class="container-fluid container-fullw bg-white ng-scope" ng-controller="createShuttleCtrl">
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="createShuttleForm" ng-submit="createShuttle(createShuttleForm.$valid)">
+				<div class="col-md-6">
+					<fieldset>
+						<legend>
+							Basic Information
+						</legend>
+						<div class="form-group">
+							<label>
+								Brand <span class="symbol required"></span>
+							</label>
+							<div class="form-group">
+								<input name="brand" ng-model="shuttle.brand" class="form-control" ng-class="{'has-error': createShuttleForm.brand.$invalid && createShuttleForm.brand.$touched}" required>
+
+								<div class="help-block" ng-messages="createShuttleForm.brand.$error" ng-if="createShuttleForm.brand.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								 Number of seats <span class="symbol required"></span>
+							</label>
+							<div class="form-group">
+								<input type="number" name="no_of_seats" ng-model="shuttle.no_of_seats" class="form-control" ng-minlength="1" ng-maxlength="2" ng-class="{'has-error': createShuttleForm.no_of_seats.$invalid && createShuttleForm.no_of_seats.$touched}" required>
+
+								<div class="help-block" ng-messages="createShuttleForm.no_of_seats.$error" ng-if="createShuttleForm.no_of_seats.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								 Does the shuttle have an air conditioner?
+							</label>
+							<div class="form-group">
+								<select name="ac" ng-model="shuttle.ac" ng-class="{'has-error': createFarmForm.ac.$invalid && createFarmForm.ac.$touched}" class="form-control" required>
+									<option value="true">Yes</option>
+									<option value="false">No</option>
+								</select>
+								
+								<div class="help-block" ng-messages="createShuttleForm.ac.$error" ng-if="createShuttleForm.ac.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								 What's the size of the shuttle?
+							</label>
+							<div class="form-group">
+								<select name="size" ng-model="shuttle.size" ng-class="{'has-error': createFarmForm.size.$invalid && createFarmForm.size.$touched}" class="form-control" required>
+									<option value="small">Small (Car)</option>
+									<option value="medium">Medium-size bus</option>
+									<option value="full">Full-size bus</option>
+								</select>
+
+								<div class="help-block" ng-messages="createShuttleForm.size.$error" ng-if="createShuttleForm.size.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group margin-bottom-0">
+						<button class="btn btn-o btn-primary" ng-disabled="createShuttleForm.$invalid||loading">
+							Create Shuttle <i class="fa fa-spinner fa-spin" ng-if="loading"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

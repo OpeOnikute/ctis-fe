@@ -1,0 +1,44 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="title" class="padding-top-15 padding-bottom-15" xmlns="http://www.w3.org/1999/html">
+	<div class="row">
+		<div class="col-sm-7">
+			<h1 class="mainTitle">MANAGE YOUR SHUTTLES</h1>
+			<span class="mainDescription">This is where you can view all your shuttles and edit them based on your needs.</span>
+		</div>
+	</div>
+</section>
+<div class="container-fluid container-fullw bg-white ng-scope">
+	<div class="row">
+		<div class="col-sm-12">
+			<div ng-controller="shuttleTableCtrl">
+				<div class="table-responsive">
+					<table ng-table="tableParams" class="table">
+						<tbody ng-repeat="p in data">
+						<tr id="tr{{p.shuttle_id}}" ng-class-odd="'odd'" ng-class-even="'even'">
+							<td class="rowTd" data-title="'Brand'">{{p.brand}}</td>
+							<td class="rowTd" data-title="'In transit'"><span ng-class="{'label label-default': p.en_route === true, 'label label-danger': p.en_route !== true}">{{p.en_route}}</span></td>
+							<td class="rowTd" data-title="'No of seats'">{{p.no_of_seats}}</td>
+							<td class="rowTd" data-title="'Air Conditioner'"><span ng-class="{'label label-default': p.ac === true, 'label label-danger': p.ac !== true}">{{p.ac}}</span></td>
+							<td class="rowTd" data-title="'Size'">{{p.size}}</td>
+							<td class="rowTd" data-title="'Status'"><span ng-class="{'label label-default': p.status === 'enabled', 'label label-danger': p.status === 'disabled' || p.status === 'blocked', 'label label-warning': p.status === 'pending'}">{{p.status}}</span></td>
+							<td class="rowTd" >
+								<div class="pull-right margin-right-10">
+									<input type=button class="btn btn-primary btn-o btn-sm" id="editRowBtn{{p.shuttle_id}}" value="edit"
+										   ng-click="setEditId(p.shuttle_id, p)">
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="editId===p.shuttle_id" ng-if="editId===p.shuttle_id">
+							<td colspan="7" ng-include src="'components/driver/views/editShuttleRow.html'"></td>
+						</tr>
+						</tbody>
+					</table>
+					<div class="text-center">
+						<p ng-if="!loading && !data.length">Looks like you don't have any shuttles yet. Go ahead and <a ui-sref="driver.dashboard.shuttles.manage">add one</a>.</p>
+						<span ng-if="loading"><i class="fa fa-spinner fa-spin"></i></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

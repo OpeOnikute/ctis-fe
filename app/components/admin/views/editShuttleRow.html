@@ -1,0 +1,36 @@
+<table class="table no-bg">
+	<tr>
+		<td>Brand:</td>
+		<td>
+		<input class="form-control w100" name="brand"  ng-model="p.brand">
+		</td>
+		<td>Number of seats:</td>
+		<td>
+			<input class="form-control w100" type="url" name="no_of_seats"  ng-model="p.no_of_seats">
+		</td>
+	</tr>
+	<tr>
+		<td>Air Conditioner:</td>
+		<td>
+			<select class="form-control w180" name="ac" ng-model="p.ac">
+				<option value="true">Yes</option>
+				<option value="false">No</option>
+			</select>
+		</td>
+		<td>Size:</td>
+		<td>
+			<select class="form-control w180" name="size" ng-model="p.size">
+				<option value="small">Small</option>
+				<option value="medium">Medium</option>
+				<option value="full">Full</option>
+			</select>
+		</td>
+		<td colspan="4">
+			<div class="pull-right">
+				<input type="button" class="btn btn-primary btn-sm margin-right-15" value=" save " ng-disabled="loading" ng-click="updateShuttle()">
+				<input type="button" class="btn btn-primary btn-sm" value=" cancel" ng-disabled="loading" ng-click="setEditId(-1)">
+			</div>
+		</td>
+	</tr>
+</table>
+<!--  class="editRowTd" -->
