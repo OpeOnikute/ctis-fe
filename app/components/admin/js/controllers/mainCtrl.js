@@ -299,3 +299,59 @@ app.controller('createLocationCtrl', ['$rootScope', '$scope', '$http', 'toaster'
         };
     }]);
 
+app.controller('addDirectionsCtrl', ['$rootScope', '$scope', '$http', 'toaster', 'httpFactory', 'formHelper',
+    function ($rootScope, $scope, $http, toaster, httpFactory, formHelper) {
+
+        $scope.directions = {};
+
+        $scope.loadingLocations = true;
+
+        httpFactory.getJson($scope.app.apiURL + '/locations/', {}, function(response) {
+
+            $scope.loadingLocations = false;
+
+            if (response.status === 'success') {
+                $scope.locations = response.data;
+            }
+        });
+
+        $scope.addDirections = function (formValid) {
+
+            if (!formValid) {
+                toaster.pop('error', 'Form Invalid', 'The form you filled seems to be invalid.');
+                return;
+            }
+
+            debugger;
+
+            if (!$scope.directions) {
+                toaster.pop('error', 'Technical issue', 'An error occurred. Please try again.');
+                return;
+            }
+
+            $scope.directions.location_id = $scope.directions.location._id;
+            console.log($scope.directions);
+            $scope.loading = true;
+
+            httpFactory.postJson($scope.app.apiURL + '/locations/' + $scope.directions.location_id + '/directions', $scope.directions, function(response) {
+
+                $scope.loading = false;
+
+                var status = response.status || 'error';
+
+                if (status !== 'success') {
+                    toaster.pop(status, status.toUpperCase(), response.message || 'An error occurred. Please try again.');
+                    return;
+                }
+
+                $scope.directions = {};
+
+                $rootScope.addDirectionsForm = $scope.addDirectionsForm;
+                //clear the form inputs
+                formHelper.resetForm('addDirectionsForm');
+
+                toaster.pop(status, status.toUpperCase(), response.message || 'Directions added successfully.');
+            });
+        };
+}]);
+

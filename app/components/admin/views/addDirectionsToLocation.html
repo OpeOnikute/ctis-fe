@@ -1,0 +1,82 @@
+<!-- start: DASHBOARD TITLE -->
+<section id="page-title" class="padding-top-15 padding-bottom-15" xmlns="http://www.w3.org/1999/html">
+	<div class="row">
+		<div class="col-sm-7">
+			<h1 class="mainTitle">ADD DIRECTIONS TO A LOCATION</h1>
+		</div>
+	</div>
+</section>
+<div class="container-fluid container-fullw bg-white ng-scope" ng-controller="addDirectionsCtrl">
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="addDirectionsForm" ng-submit="addDirections(addDirectionsForm.$valid)">
+				<div class="col-md-6">
+					<fieldset>
+						<legend>
+							Basic Information
+						</legend>
+						<div class="form-group">
+							<label>
+								Location <span class="symbol required"></span>
+							</label>
+							<div class="form-group" ng-if="locations">
+								<ui-select ng-model="directions.location" theme="bootstrap">
+									<ui-select-match placeholder="Select in the list..." required>
+										{{$select.selected.name + ' - ' + $select.selected.type}}
+									</ui-select-match>
+									<ui-select-choices repeat="f in locations | filter: $select.search">
+										<div ng-bind-html="f.name + ' - ' + f.type | capitalize | highlight: $select.search"></div>
+									</ui-select-choices>
+								</ui-select>
+							</div>
+							<div ng-if="loadingLocations"><i class="fa fa-spinner fa-spin"></i></div>
+						</div>
+						<div class="form-group">
+							<label>
+								 Driving <span class="symbol required"></span>
+							</label>
+							<div class="form-group">
+								<textarea name="description" ng-model="directions.driving" class="form-control" ng-class="{'has-error': addDirectionsForm.driving.$invalid && addDirectionsForm.driving.$touched}" required></textarea>
+								
+								<div class="help-block" ng-messages="addDirectionsForm.driving.$error" ng-if="addDirectionsForm.driving.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								 Walking <span class="symbol required"></span>
+							</label>
+							<div class="form-group">
+								<textarea name="walking" ng-model="directions.walking" class="form-control" ng-class="{'has-error': addDirectionsForm.walking.$invalid && addDirectionsForm.walking.$touched}" required></textarea>
+								
+								<div class="help-block" ng-messages="addDirectionsForm.walking.$error" ng-if="addDirectionsForm.walking.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>
+								 Transit <span class="symbol required"></span>
+							</label>
+							<div class="form-group">
+								<textarea name="transit" ng-model="directions.transit" class="form-control" ng-class="{'has-error': addDirectionsForm.transit.$invalid && addDirectionsForm.transit.$touched}" required></textarea>
+
+								<div class="help-block" ng-messages="addDirectionsForm.transit.$error" ng-if="addDirectionsForm.transit.$touched">
+									<div ng-messages-include="views/partial/formMessages.html"></div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group margin-bottom-0">
+						<button class="btn btn-o btn-primary" ng-disabled="addDirectionsForm.$invalid||loading">
+							Add Directions {{directions.location ? 'to ' + directions.location.name : ''}} <i class="fa fa-spinner fa-spin" ng-if="loading"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

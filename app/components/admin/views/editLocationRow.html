@@ -32,9 +32,30 @@
 				<option value="blocked">Blocked</option>
 			</select>
 		</td>
-		<td colspan="4">
+	</tr>
+	<tr ng-show="l.directions">
+		<td colspan="8">
+			<h3 style="margin: 0;">Directions</h3>
+		</td>
+	</tr>
+	<tr ng-show="l.directions">
+		<td>Driving:</td>
+		<td>
+			<textarea class="form-control w150" name="latitude" ng-model="l.directions.driving"></textarea>
+		</td>
+		<td>Walking:</td>
+		<td>
+			<textarea class="form-control w150" name="latitude" ng-model="l.directions.walking"></textarea>
+		</td>
+		<td>Transit:</td>
+		<td>
+			<textarea class="form-control w150" name="latitude" ng-model="l.directions.transit"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6">
 			<div class="pull-right">
-				<input type="button" class="btn btn-primary btn-sm margin-right-15" value=" save " ng-disabled="loading" ng-click="updateShuttle()">
+				<input type="button" class="btn btn-primary btn-sm margin-right-15" value=" save " ng-disabled="loading" ng-click="updateLocation()">
 				<input type="button" class="btn btn-primary btn-sm" value=" cancel" ng-disabled="loading" ng-click="setEditId(-1)">
 			</div>
 		</td>

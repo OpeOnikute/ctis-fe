@@ -20,12 +20,13 @@
 							<td class="rowTd" data-title="'Description'">{{l.description}}</td>
 							<td class="rowTd" data-title="'Latitude'">{{l.latitude}}</td>
 							<td class="rowTd" data-title="'Longitude'">{{l.longitude}}</td>
+							<td class="rowTd" data-title="'Directions'">{{l.directions ? 'Yes' : 'No'}}</td>
 							<td class="rowTd" data-title="'Status'"><span ng-class="{'label label-default': l.status === 'enabled', 'label label-danger': l.status === 'disabled' || l.status === 'blocked', 'label label-warning': l.status === 'pending'}">{{l.status || 'N/A'}}</span></td>
 							<td class="rowTd" data-title="'Type'">{{l.created}}</td>
 							<td class="rowTd" >
 								<div class="pull-right margin-right-10">
 									<input type=button class="btn btn-primary btn-o btn-sm" id="editRowBtn{{l._id}}" value="edit"
-										   ng-click="setEditId(l._id, p)">
+										   ng-click="setEditId(l._id, l)">
 								</div>
 							</td>
 						</tr>

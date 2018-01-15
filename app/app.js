@@ -161,6 +161,11 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
         templateUrl: 'components/admin/views/addLocation.html',
         resolve: loadSequence('ui.select'),
         title: 'Admin - Add New Location'
+    }).state('admin.dashboard.locations.directions', {
+        url: "/directions/",
+        templateUrl: 'components/admin/views/addDirectionsToLocation.html',
+        resolve: loadSequence('ui.select'),
+        title: 'Admin - Add Directions To A Location'
     });
 
     // Generates a resolve object previously configured in constant.JS_REQUIRES (config.constant.js)
