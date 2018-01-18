@@ -10,7 +10,6 @@ String.prototype.replaceAll = function(search, replacement) {
 var app = angular.module('myApp', [
     'ngRoute',
     'ui.router',
-    'ui.bootstrap',
     'myApp.version',
     'blockUI',
     'ngStorage',
@@ -56,6 +55,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$controllerProvider', '$com
         url: "/faq",
         templateUrl: 'views/faq.html',
         title: 'FAQ'
+    }).state('no_location', {
+        url: "/no-location",
+        templateUrl: 'views/no_location.html',
+        title: 'No Location'
     }).state('driver', {
         url: "/driver",
         templateUrl: 'components/driver/views/index.html',
@@ -356,29 +359,8 @@ app.service('geoLocator', function () {
 
         //returns position.coords.latitude and position.coords.longitude
         //provide the same callback as both success and error callback
-        return navigator.geolocation.getCurrentPosition(callback, errCallback);
+        return navigator.geolocation.getCurrentPosition(callback, errCallback, {enableHighAccuracy: true});
     }
-});
-
-app.factory('modalHelper', function ($uibModal) {
-
-    return {
-        openModal: function (options) {
-            return $uibModal.open({
-                animation: options.animationsEnabled || true,
-                templateUrl: options.templateUrl,
-                controller: options.controller,
-                size: options.size,
-                resolve: options.locals || {}
-            });
-        },
-        dismissModal:  function ($uibModalInstance, reason) {
-            return $uibModalInstance.dismiss(reason);
-        },
-        closeModal:  function ($uibModalInstance, selected) {
-            return $uibModalInstance.close(selected);
-        }
-    };
 });
 
 app.factory('authProvider', function ($rootScope, $sessionStorage) {
@@ -446,37 +428,27 @@ app.factory('helpers', function ($rootScope, $filter) {
             //ensure it's not empty
             if (angular.equals(directions, {})) return '';
 
-            for (var direction in directions) {
-                if (!directions.hasOwnProperty(direction)) continue;
+            var types = ['driving', 'walking', 'transit'];
 
-                var routes = directions[direction]['routes'];
+            for (var type in types) {
+                if (!types.hasOwnProperty(type)) continue;
 
-                if (!routes) continue;
+                var directionType = types[type];
 
-                if (routes.length <= 0) continue;
+                var details = directions[directionType];
 
-                str +=' <div class="pad-vertical">' +
-                    '<p class="cu-txt-header"><strong>' +  $filter('capitalize')(direction) + '</strong> <span><img class="direction-image" src="' + $rootScope.app.icons[direction] + '"></span></p>' +
-                    '<p>' +
-                    '<small><strong>Routes:</strong> ' + routes.length + '</small>' +
-                    '</p>' +
+                if (!details) continue;
+
+                str += ' <div class="pad-vertical">' +
+                    '<p class="cu-txt-header"><strong>' + $filter('capitalize')(directionType) + '</strong> <span><img class="direction-image" src="' + $rootScope.app.icons[directionType] + '"></span></p>' +
                     '<small>' +
-                    '<ul>';
-
-                for (var routeIndex in routes) {
-
-                    if (!routes.hasOwnProperty(routeIndex)) continue;
-
-                    var route = routes[routeIndex];
-
-                    str += '<li>' +
-                        '<p><strong>Distance:</strong> ' + route.distance.text + '</p>' +
-                        '<p><strong>Duration:</strong> ' + route.duration.text + '</p>' +
-                        // '<p><strong>Instructions:</strong> <p>' + route.html_instructions + '</p></p>' +
-                        '</li>';
-                }
-
-                str += '</ul>' +
+                    '<ul>' +
+                    '<li>' +
+                    '<p><strong>Distance:</strong> ' + details.distance.text + '</p>' +
+                    '<p><strong>Duration:</strong> ' + details.duration.text + '</p>' +
+                    '<p><strong>Instructions:</strong>' + (details.instructions || 'N/A') + '</p>' +
+                    '</li>' +
+                    '</ul>' +
                     '</small>' +
                     '</div>';
             }

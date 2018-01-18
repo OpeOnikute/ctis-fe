@@ -322,8 +322,6 @@ app.controller('addDirectionsCtrl', ['$rootScope', '$scope', '$http', 'toaster',
                 return;
             }
 
-            debugger;
-
             if (!$scope.directions) {
                 toaster.pop('error', 'Technical issue', 'An error occurred. Please try again.');
                 return;

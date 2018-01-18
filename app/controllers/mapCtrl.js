@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory', 'Map', 'blockUI', 'geoLocator', '$compile', '$filter', 'helpers',
-    function($scope, $rootScope, modalHelper, httpFactory, Map, blockUI, geoLocator, $compile, $filter, helpers) {
+app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockUI', 'geoLocator', '$compile', '$filter', 'helpers', '$location',
+    function($scope, $rootScope, httpFactory, Map, blockUI, geoLocator, $compile, $filter, helpers, $location) {
 
     var mapBlockUI = blockUI.instances.get('mapBlockUI');
 
@@ -11,23 +11,48 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
 
     $scope.init = function () {
 
-        if ($scope.loading === true) {
-            mapBlockUI.start({
-                message: 'Loading locations....'
-            });
-        }
+        $scope.initialized = true;
+
+        mapBlockUI.start({
+            message: 'Loading locations....'
+        });
 
         try {
-            Map.init($scope.addUsersLocationToMap, $scope.getShuttles);
-            $scope.loadBusStops();
-            $scope.addBuildings();
+
+            if ($rootScope.selectedBusStop) {
+
+                Map.init($scope.addUsersLocationToMap, $scope.getShuttles);
+                $scope.loadBusStops();
+                $scope.addBuildings();
+
+            } else {
+
+                $scope.getUsersLocation(function (location) {
+
+                    if (!location) {
+                        //user would be redirected by the function
+                        return;
+                    }
+
+                    $scope.userLocation = {
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        name: 'Your current location',
+                        description: 'This is your current location.'
+                    };
+
+                    //default departure location is the user's current position
+                    $scope.departureLocation = $scope.userLocation;
+
+                    Map.init($scope.addUsersLocationToMap, $scope.getShuttles);
+                    $scope.loadBusStops();
+                    $scope.addBuildings();
+                });
+            }
+
         } catch (e) {
             console.error(e);
             $scope.errorMessage = 'We could not load the map. Please check your internet connection and try again.';
-        }
-
-        if ($scope.loading === false) {
-            mapBlockUI.stop();
         }
     };
 
@@ -79,7 +104,7 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
             function (res) {
                 //passed as a callback to the map's init function cause we're adding markers
                 if (!res) {
-                    alert('We were not able to get your determine your current location. Please try a different browser, enable location in your browser settings.');
+                    $location.path('/no-location');
                     callback(false);
                 }
 
@@ -92,11 +117,7 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
             },
             function (err) {
                 if (err.code === 1 || err.message === 'User denied Geolocation') {
-                    modalHelper.openModal({
-                        templateUrl: '/views/partial/modals/select_departure.html',
-                        controller: 'selectDepartureCtrl',
-                        locals: {}
-                    });
+                    $location.path('/no-location');
                 }
 
                 callback(false);
@@ -107,45 +128,99 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
 
         $scope.loading = true;
 
-        $scope.getUsersLocation(function (location) {
+        if ($rootScope.selectedBusStop) {
+            $scope.departureLocation = $rootScope.selectedBusStop;
 
-            $scope.loading = false;
+            $scope.addLocationToMap({
+                latitude: $scope.departureLocation.latitude,
+                longitude: $scope.departureLocation.longitude,
+                header: $scope.departureLocation.name,
+                description: $scope.departureLocation.description,
+                setCenter: true,
+                subText: '<small ng-show="departureLocation.latitude === ' + $scope.departureLocation.latitude + ' && (departureLocation.longitude === ' +  $scope.departureLocation.longitude + ')">This is set as your current departure location.</small>',
+                icon: 'busStop'
+            });
 
-            if (!location) {
-                return next ? next() : false;
-            }
-
-            $scope.userLocation = {
-                latitude: location.latitude,
-                longitude: location.longitude,
-                name: 'Your current location',
-                description: 'This is your current location.'
-            };
-
-            //default departure location is the user's current position
-            $scope.departureLocation = $scope.userLocation;
-
-            var content = '<div id="content">'+
-                '<div id="siteNotice">'+
-                '</div>'+
-                '<h3 id="firstHeading" class="firstHeading">' + $scope.userLocation.name + '</h3>'+
-                '<div id="bodyContent">'+
-                '<p>' + $scope.userLocation.description + '</p>'+
-                '<small ng-show="departureLocation.latitude !== userLocation.latitude && (departureLocation.longitude !== userLocation.longitude)">You can <a ng-click="resetDepartureLocation()">set this as your departure location</a>.</small>' +
-                '</div>' +
-                '</div>';
-
-            var compiledContent = $compile(content)($scope);
-
-            var userIcon = $rootScope.app.icons.user;
-
-            Map.addMarker(location.longitude, location.latitude, $scope.userLocation.name, compiledContent[0], userIcon);
-            Map.setCenter(location.longitude, location.latitude);
-
-            if (next) {
+            if (typeof next === 'function') {
                 next();
             }
+
+            return;
+        }
+
+        if (!$scope.userLocation) {
+
+            $scope.getUsersLocation(function (location) {
+
+                if (!location) {
+                    return next ? next() : false;
+                }
+
+                $scope.userLocation = {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    name: 'Your current location',
+                    description: 'This is your current location.'
+                };
+
+                //default departure location is the user's current position
+                $scope.departureLocation = $scope.userLocation;
+
+                $scope.addLocationToMap({
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    header: $scope.userLocation.name,
+                    description: $scope.userLocation.description,
+                    setCenter: true,
+                    subText: '<small ng-show="departureLocation.latitude !== userLocation.latitude && (departureLocation.longitude !== userLocation.longitude)">You can <a ng-click="resetDepartureLocation()">set this as your departure location</a>.</small>',
+                    icon: 'user'
+                });
+
+                if (typeof next === 'function') {
+                    next();
+                }
+            });
+
+            return;
+        }
+
+        //location exists. add to map.
+        $scope.addLocationToMap({
+            latitude: $scope.userLocation.latitude,
+            longitude: $scope.userLocation.longitude,
+            header: $scope.userLocation.name,
+            description: $scope.userLocation.description,
+            setCenter: true,
+            subText: '<small ng-show="departureLocation.latitude !== userLocation.latitude && (departureLocation.longitude !== userLocation.longitude)">You can <a ng-click="resetDepartureLocation()">set this as your departure location</a>.</small>',
+            icon: 'user'
         });
+
+        if (typeof next === 'function') {
+            next();
+        }
+    };
+
+    $scope.addLocationToMap = function (options) {
+
+        var content = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" class="firstHeading">' + options.header + '</h3>'+
+            '<div id="bodyContent">'+
+            '<p>' + options.description + '</p>'+
+            options.subText || '' +
+            '</div>' +
+            '</div>';
+
+        var compiledContent = $compile(content)($scope);
+
+        var icon = $rootScope.app.icons[options.icon];
+
+        Map.addMarker(options.longitude, options.latitude, options.header, compiledContent[0], icon);
+
+        if (options.setCenter) {
+            Map.setCenter(options.longitude, options.latitude);
+        }
     };
 
     $scope.addBuildings = function () {
@@ -257,7 +332,13 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
 
     $scope.getShuttles = function () {
 
+        mapBlockUI.stop();
+
         if ($scope.userLocation) {
+            return $scope.executeShuttleGetRequest();
+        }
+
+        if ($scope.departureLocation) {
             return $scope.executeShuttleGetRequest();
         }
 
@@ -265,6 +346,7 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
 
             if (location) {
                 $scope.userLocation = location;
+                $scope.departureLocation = location;
 
                 $scope.executeShuttleGetRequest();
             }
@@ -331,22 +413,32 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory',
             });
     };
 
-    $scope.init();
+    if (!$scope.initialized) {
+        $scope.init();
+    }
 }]);
 
-app.controller('selectDepartureCtrl', ['$scope', '$rootScope', 'modalHelper', 'httpFactory', '$uibModalInstance',
-    function($scope, $rootScope, modalHelper, httpFactory, $uibModalInstance) {
+app.controller('selectDepartureCtrl', ['$scope', '$rootScope', 'httpFactory', '$location',
+    function($scope, $rootScope, httpFactory, $location) {
+
+        if ($rootScope.selectedBusStop) {
+            return $location.path('/map');
+        }
+
+        $scope.selectedBusStop = null;
+
 
         httpFactory.getJson($rootScope.app.apiURL + '/locations', {type: 'bus_stop'}, function (response) {
             if (response.status === 'success') {
                 $scope.busStops = response.data;
+                $scope.selectedBusStop = response.data[0];
             }
         });
 
+        $scope.selectLocation = function () {
 
-        $scope.selectedBusStop = null;
+            $rootScope.selectedBusStop = $scope.selectedBusStop ;
 
-        $scope.close = function () {
-            $uibModalInstance.close($scope.selectedBusStop)
-        }
+            $location.path('/map');
+        };
 }]);
