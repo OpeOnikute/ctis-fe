@@ -35,6 +35,7 @@ TO-DO:
 - fix the select options thing.
 - Write down sequential logic and refactor code to follow that manner to be more efficient.
 - fix the table titles in the admin
+- fix admin login error message (when api is down)
 - admin:
     - CRUD locations
     - CRUD shuttles

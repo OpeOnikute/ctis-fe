@@ -14,10 +14,6 @@ module.exports = function (grunt) {
         dist: 'dist'
     };
 
-    try {
-        yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
-    } catch (e) {}
-
     grunt.initConfig({
         yeoman: yeomanConfig,
         watch: {
@@ -29,16 +25,12 @@ module.exports = function (grunt) {
                 files: ['test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
             },
-            compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass']
-            },
             livereload: {
                 files: [
                     '<%= yeoman.app %>/{,*/}*.html',
-                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
+                    '{.tmp,<%= yeoman.app %>}/css/{,*/}*.css',
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+                    '<%= yeoman.app %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ],
                 tasks: ['livereload']
             }
@@ -89,21 +81,6 @@ module.exports = function (grunt) {
             },
             server: '.tmp'
         },
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc'
-            },
-            all: [
-                'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/{,*/}*.js'
-            ]
-        },
-        karma: {
-            unit: {
-                configFile: 'karma.conf.js',
-                singleRun: true
-            }
-        },
         coffee: {
             dist: {
                 files: [{
@@ -124,23 +101,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        compass: {
-            options: {
-                sassDir: '<%= yeoman.app %>/styles',
-                cssDir: '.tmp/styles',
-                imagesDir: '<%= yeoman.app %>/images',
-                javascriptsDir: '<%= yeoman.app %>/scripts',
-                fontsDir: '<%= yeoman.app %>/styles/fonts',
-                importPath: '<%= yeoman.app %>/components',
-                relativeAssets: true
-            },
-            dist: {},
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
-        },
         concat: {
             dist: {
                 files: {
@@ -159,7 +119,7 @@ module.exports = function (grunt) {
         },
         usemin: {
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
-            css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+            css: ['<%= yeoman.dist %>/css/{,*/}*.css'],
             options: {
                 dirs: ['<%= yeoman.dist %>']
             }
@@ -168,18 +128,18 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= yeoman.app %>/images',
+                    cwd: '<%= yeoman.app %>/img',
                     src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: '<%= yeoman.dist %>/images'
+                    dest: '<%= yeoman.dist %>/img'
                 }]
             }
         },
         cssmin: {
             dist: {
                 files: {
-                    '<%= yeoman.dist %>/styles/main.css': [
-                        '.tmp/styles/{,*/}*.css',
-                        '<%= yeoman.app %>/styles/{,*/}*.css'
+                    '<%= yeoman.dist %>/css/app.css': [
+                        '.tmp/css/{,*/}*.css',
+                        '<%= yeoman.app %>/css/{,*/}*.css'
                     ]
                 }
             }
@@ -200,7 +160,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>',
-                    src: ['*.html', 'views/*.html'],
+                    src: ['*.html', 'views/*.html', 'views/partial/*.html'],
                     dest: '<%= yeoman.dist %>'
                 }]
             }
@@ -225,7 +185,7 @@ module.exports = function (grunt) {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
                         '<%= yeoman.dist %>/scripts/scripts.js'
-                    ],
+                    ]
                 }
             }
         },
@@ -233,10 +193,12 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     src: [
+                        '<%= yeoman.dist %>/bower_components/{,*/}*.js',
                         '<%= yeoman.dist %>/scripts/{,*/}*.js',
-                        '<%= yeoman.dist %>/styles/{,*/}*.css',
-                        '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}',
-                        '<%= yeoman.dist %>/styles/fonts/*'
+                        '<%= yeoman.dist %>/css/{,*/}*.css',
+                        '<%= yeoman.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        '<%= yeoman.dist %>/img/icons/{,*/}*.{png,jpg,jpeg,gif,webp}',
+                        '<%= yeoman.dist %>/css/fonts/*'
                     ]
                 }
             }
@@ -252,7 +214,7 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         '.htaccess',
                         'components/**/*',
-                        'images/{,*/}*.{gif,webp}'
+                        'img/{,*/}*.{gif,webp}'
                     ]
                 }]
             }
@@ -264,27 +226,15 @@ module.exports = function (grunt) {
     grunt.registerTask('server', [
         'clean:server',
         'coffee:dist',
-        'compass:server',
         'livereload-start',
         'connect:livereload',
         'open',
         'watch'
     ]);
 
-    grunt.registerTask('test', [
-        'clean:server',
-        'coffee',
-        'compass',
-        'connect:test',
-        'karma'
-    ]);
-
     grunt.registerTask('build', [
         'clean:dist',
-        'jshint',
-        'test',
         'coffee',
-        'compass:dist',
         'useminPrepare',
         'imagemin',
         'cssmin',
