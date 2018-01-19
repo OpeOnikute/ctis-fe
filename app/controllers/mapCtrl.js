@@ -52,6 +52,7 @@ app.controller('mapCtrl', ['$scope', '$rootScope', 'httpFactory', 'Map', 'blockU
 
         } catch (e) {
             console.error(e);
+            mapBlockUI.stop();
             $scope.errorMessage = 'We could not load the map. Please check your internet connection and try again.';
         }
     };
@@ -425,10 +426,12 @@ app.controller('selectDepartureCtrl', ['$scope', '$rootScope', 'httpFactory', '$
             return $location.path('/map');
         }
 
-        $scope.selectedBusStop = null;
-
+        $scope.loadingBusStops = true;
 
         httpFactory.getJson($rootScope.app.apiURL + '/locations', {type: 'bus_stop'}, function (response) {
+
+            $scope.loadingBusStops = false;
+
             if (response.status === 'success') {
                 $scope.busStops = response.data;
                 $scope.selectedBusStop = response.data[0];

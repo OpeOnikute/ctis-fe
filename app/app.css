@@ -181,10 +181,6 @@ body {
   padding: 20px 60px;
   margin-bottom: 20px;
 }
-.cu-list {
-  padding-left: 40px;
-  padding-right: 40px;
-}
 .cu-list .cu-list-item {
   border-bottom: 1px solid #ddd;
   padding: 15px 0;
@@ -266,9 +262,37 @@ body {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+.pad-vertical-lg {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
 .direction-image {
   max-width: 25px !important;
 }
 .modal {
   display: block !important;
 }
+.hero {
+  color: white;
+  width: 100%;
+  padding: 30px;
+  background: linear-gradient(to right, darkmagenta, #B000B0);
+}
+
+.hero._fixed {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 0;
+}
+
+/*@media (min-width: 1025px) {*/
+  /*.hero {*/
+    /*padding-left: 110px;*/
+  /*}*/
+/*}*/
+
+/*@media (min-width: 1300px) {*/
+  /*.hero {*/
+    /*padding-left: 185px;*/
+  /*}*/
+/*}*/

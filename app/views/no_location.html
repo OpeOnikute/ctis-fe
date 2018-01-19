@@ -1,14 +1,15 @@
-<div class="container-fluid faq-container" ng-controller="selectDepartureCtrl">
-    <div class="container-fluid">
+<div class="container faq-container" ng-controller="selectDepartureCtrl">
+    <div class="container-fluid pad-vertical-lg">
         <h3>Oops!</h3>
         <p>We could not get your location.</p>
         <p>Please select one of the bus-stops below, to set it as your departure location.</p>
 
         <div class="mg-vertical-sm">
-            <select class="form-control" ng-model="selectedBusStop" ng-options="busStop as busStop.name for busStop in busStops track by busStop._id" ng-if="busStops">
+            <select class="form-control" ng-model="selectedBusStop" ng-options="busStop as busStop.name for busStop in busStops track by busStop.name" ng-if="busStops">
             </select>
         </div>
 
+        <small ng-if="loadingBusStops"><span><i class="fa fa-spinner fa-spin"></i></span> Loading Bus Stops...</small>
         <a class="btn btn-cl" ng-if="selectedBusStop" ng-click="selectLocation()">Select {{selectedBusStop.name}}</a>
     </div>
 </div>

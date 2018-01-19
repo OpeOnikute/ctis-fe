@@ -32,6 +32,7 @@ TO-DO:
 - fix the loading screen issues.
 - if the user's location can't be gotten, trigger a modal that tells them to select their departure location
 - add fixed hero at the bottom to depict best use with GPS-enabled device.
+- fix the select options thing.
 - Write down sequential logic and refactor code to follow that manner to be more efficient.
 - fix the table titles in the admin
 - admin:
